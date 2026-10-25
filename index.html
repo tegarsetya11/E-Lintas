@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="E-Lintas - Platform edukasi interaktif untuk mempelajari peraturan lalu lintas, memahami situasi berkendara melalui kuis, dan simulasi jalur uji praktik SIM C secara digital.">
+  <title>E-Lintas - Platform Edukasi & Simulasi Lalu Lintas</title>
+  
+  <!-- Typography: Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css?v=47">
+</head>
+<body>
+
+  <div id="sim-guidelines-overlay" class="sim-guidelines-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="sim-guidelines-title">
+    <div class="sim-guidelines-dialog">
+      <h2 id="sim-guidelines-title">🟢 Syarat Lulus Uji Praktik SIM C</h2>
+      <ul>
+        <li><strong>Lurus &amp; Rem:</strong> Menjaga kecepatan (min. 30 km/jam) di trek lurus lalu mengerem tepat di batas berhenti.</li>
+        <li><strong>Tikungan S:</strong> Melewati tikungan berliku berbentuk huruf "S" dengan lancar dan seimbang.</li>
+        <li><strong>U-Turn:</strong> Melakukan putar balik arah pada area berbentuk huruf "U" secara stabil.</li>
+        <li><strong>Reaksi Menghindar:</strong> Mengarahkan kendaraan ke kiri atau kanan dengan cepat sesuai petunjuk/petugas.</li>
+        <li><strong>Perlengkapan Standar:</strong> Wajib memakai helm SNI (terkunci rapat) dan pakaian/sepatu yang aman.</li>
+      </ul>
+
+      <h2 class="sim-guidelines-prohibitions">🔴 Larangan (Penyebab Langsung Gagal)</h2>
+      <ul>
+        <li><strong>Turun Kaki:</strong> Menurunkan atau menjejakkan kaki ke aspal saat motor berjalan.</li>
+        <li><strong>Menabrak Pembatas:</strong> Menyenggol, menabrak, atau melindas garis marka dan patok/kerucut (<em>cone</em>).</li>
+        <li><strong>Keluar Lintasan:</strong> Mengendarai motor hingga melenceng keluar dari batas jalur sirkuit.</li>
+        <li><strong>Mesin Mati:</strong> Mesin sepeda motor mati di tengah-tengah proses ujian.</li>
+        <li><strong>Salah Respon:</strong> Mengabaikan aba-aba atau salah mengambil arah reaksi pengereman.</li>
+      </ul>
+
+      <aside class="sim-guidelines-disclaimer">
+        <strong>📌 Catatan Informasi &amp; Penyangkalan (Disclaimer):</strong>
+        <p><em>Seluruh materi dan acuan aturan uji praktik ini disadur berdasarkan panduan resmi dari <strong>Korlantas Polri</strong>. Fitur yang terdapat dalam game/platform <strong>E-Lintas</strong> ini murni merupakan <strong>simulasi 2D sederhana</strong> untuk latihan dan edukasi awal, bukan merupakan ujian SIM yang sesungguhnya.</em></p>
+      </aside>
+      <div class="sim-guidelines-actions">
+        <button type="button" class="sim-guidelines-accept" id="btn-accept-sim-guidelines">SETUJU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       1. HEADER / NAVBAR
+       ==================================================================== -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#home" class="brand" id="brand-logo" aria-label="E-Lintas Beranda">
+        <img src="assets/images/logo.png" alt="Logo E-Lintas" class="brand-logo-img">
+        <div class="brand-text">
+          <span class="brand-title">E-LINTAS</span>
+          <span class="brand-tag">Edukasi & Simulasi Berkendara</span>
+        </div>
+      </a>
+
+      <nav class="app-nav" aria-label="Navigasi Utama">
+        <button type="button" class="nav-btn active" data-target="home" id="nav-btn-home">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Beranda</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-target="information" id="nav-btn-info">
+          <svg class="nav-icon nav-icon-info" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9.25"></circle>
+            <circle cx="12" cy="7.25" r="1.45"></circle>
+            <rect x="10.55" y="10" width="2.9" height="8.25" rx="1.45"></rect>
+          </svg>
+          <span>Informasi</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       MAIN APPLICATION VIEWS (SPA VIEW SWITCHING)
+       ==================================================================== -->
+  <main class="app-main">
+
+    <!-- ------------------------------------------------------------------
+         VIEW 1: HALAMAN BERANDA (HOME VIEW)
+         ------------------------------------------------------------------ -->
+    <section id="view-home" class="app-view active" aria-label="Beranda E-Lintas">
+      <div class="home-cloud home-cloud-left" aria-hidden="true"></div>
+      <div class="home-cloud home-cloud-right" aria-hidden="true"></div>
+      <div class="content-wrapper">
+        
+        <!-- Hero Section -->
+        <div class="hero-card">
+          <div class="hero-logo-wrapper">
+            <img src="assets/images/logo.png" alt="Logo Maskot E-Lintas" class="hero-logo-img">
+          </div>
+          <div class="hero-badge">Platform Edukasi Digital Independen</div>
+          <p class="hero-subtitle">Belajar Lalu Lintas, Pahami Aturan, Tingkatkan Keselamatan.</p>
+          <p class="hero-description">
+            E-Lintas merupakan singkatan dari Edukasi &amp; Simulasi Lalu Lintas. Platform edukasi interaktif ini membantu Anda mempelajari peraturan lalu lintas, menguji pemahaman melalui kuis, dan mengenal simulasi jalur ujian praktik SIM C secara digital.
+          </p>
+        </div>
+
+        <!-- Menu Utama -->
+        <div class="menu-grid" role="navigation" aria-label="Menu Utama E-Lintas">
+          <div class="traffic-light-panel" aria-label="Menu kuis dan simulasi">
+            <!-- Tombol 1: Kuis Peraturan & Rambu -->
+            <div class="menu-card" role="button" tabindex="0" data-target="quiz-1" id="menu-quiz-1" aria-label="Buka Kuis Peraturan dan Rambu-Rambu Lalu Lintas">
+            <div class="menu-card-header">
+              <div class="menu-icon-box bg-blue-subtle">
+                <img src="assets/images/traffic-stop-sign.png" alt="" class="menu-icon-illustration">
+              </div>
+              <span class="badge-tag">Kuis 1</span>
+            </div>
+            <h2 class="menu-title">Kuis Peraturan dan Rambu-Rambu Lalu Lintas</h2>
+            <p class="menu-desc">Pelajari dan uji pemahaman mengenai peraturan, rambu-rambu, serta ketentuan dasar berlalu lintas.</p>
+            <div class="menu-action">
+              <span>Buka Materi Kuis</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+            </div>
+
+            <!-- Tombol 2: Kuis Studi Kasus Uji Teori SIM -->
+            <div class="menu-card" role="button" tabindex="0" data-target="quiz-2" id="menu-quiz-2" aria-label="Buka Kuis Studi Kasus Uji Teori SIM">
+            <div class="menu-card-header">
+              <div class="menu-icon-box bg-blue-subtle">
+                <img src="assets/images/traffic-light-icon.png" alt="" class="menu-icon-illustration">
+              </div>
+              <span class="badge-tag">Kuis 2</span>
+            </div>
+            <h2 class="menu-title">Kuis Studi Kasus Uji Teori SIM</h2>
+            <p class="menu-desc">Latih kemampuan memahami situasi lalu lintas, persimpangan, prioritas kendaraan, marka jalan, dan APILL.</p>
+            <div class="menu-action">
+              <span>Pelajari Kasus</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+            </div>
+
+            <!-- Tombol 3: Simulasi Berkendara Jalur Uji SIM C -->
+            <div class="menu-card highlight-card" role="button" tabindex="0" data-target="simulation" id="menu-sim" aria-label="Buka Simulasi Berkendara Jalur Uji SIM C">
+            <div class="menu-card-header">
+              <div class="menu-icon-box bg-primary-subtle">
+                <img src="assets/images/scooter-rider-icon.png" alt="" class="menu-icon-illustration">
+              </div>
+              <span class="badge-tag highlight-badge">Simulasi Interaktif 2D</span>
+            </div>
+            <h2 class="menu-title">Simulasi Berkendara Jalur Uji SIM C</h2>
+            <p class="menu-desc">Kenali jalur ujian praktik SIM C melalui simulasi berkendara interaktif berbasis 2D Canvas.</p>
+            <div class="menu-action">
+              <span class="font-bold">Mulai Simulasi 2D</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 2: HALAMAN KUIS 1 - DALAM MASA PENGEMBANGAN
+         ------------------------------------------------------------------ -->
+    <section id="view-quiz-1" class="app-view" aria-labelledby="quiz1-heading">
+      <div class="content-wrapper page-card-wrapper">
+        <div class="card page-card">
+
+          <div class="dev-badge-row">
+            <span class="dev-quiz-label">Kuis 1</span>
+            <span class="dev-status-pill">🔧 Dalam Masa Pengembangan</span>
+          </div>
+
+          <h1 id="quiz1-heading" class="page-title">Kuis Peraturan dan Rambu-Rambu Lalu Lintas</h1>
+
+          <div class="development-box">
+            <div class="dev-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <h2 class="dev-title">Masih dalam masa pengembangan</h2>
+            <p class="dev-desc">
+              Fitur kuis ini sedang dipersiapkan. Konten soal dan sistem penilaian akan segera tersedia pada versi berikutnya.
+            </p>
+          </div>
+
+          <div class="page-action-row">
+            <button type="button" class="btn btn-primary btn-back-home" data-target="home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Kembali ke Beranda</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 3: HALAMAN KUIS 2 - DALAM MASA PENGEMBANGAN
+         ------------------------------------------------------------------ -->
+    <section id="view-quiz-2" class="app-view" aria-labelledby="quiz2-heading">
+      <div class="content-wrapper page-card-wrapper">
+        <div class="card page-card">
+
+          <div class="dev-badge-row">
+            <span class="dev-quiz-label">Kuis 2</span>
+            <span class="dev-status-pill">🔧 Dalam Masa Pengembangan</span>
+          </div>
+
+          <h1 id="quiz2-heading" class="page-title">Kuis Studi Kasus Uji Teori SIM</h1>
+
+          <div class="development-box">
+            <div class="dev-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <h2 class="dev-title">Masih dalam masa pengembangan</h2>
+            <p class="dev-desc">
+              Fitur kuis studi kasus ini sedang dalam tahap perancangan. Skenario persimpangan, prioritas kendaraan, marka jalan, dan APILL akan segera tersedia.
+            </p>
+          </div>
+
+          <div class="page-action-row">
+            <button type="button" class="btn btn-primary btn-back-home" data-target="home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Kembali ke Beranda</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ------------------------------------------------------------------
+         VIEW 4: HALAMAN SIMULASI BERKENDARA JALUR UJI SIM C (FOKUS UTAMA)
+         ------------------------------------------------------------------ -->
+    <section id="view-simulation" class="app-view" aria-labelledby="sim-heading">
+      <div class="content-wrapper sim-wrapper">
+        
+        <!-- Header Bar Simulasi -->
+        <div class="sim-top-bar">
+          <div class="sim-header-left">
+            <button type="button" class="btn btn-outline btn-back-home" data-target="home" id="btn-sim-back" title="Kembali ke Beranda">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Kembali</span>
+            </button>
+            <div class="sim-title-group">
+              <h1 id="sim-heading" class="sim-heading-title">Simulasi Jalur Uji SIM C</h1>
+              <p class="sim-heading-sub">Kendali 2D Jalur Ujian Praktik Roda Dua</p>
+            </div>
+          </div>
+
+          <!-- Simulation Actions Bar -->
+          <div class="sim-controls-toolbar" role="toolbar" aria-label="Kontrol Permainan">
+            <button type="button" class="btn btn-primary" id="btn-sim-play-pause">
+              <svg id="icon-play-state" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <!-- Pause icon when running -->
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+              <span id="text-play-state">Jeda</span>
+            </button>
+            
+            <button type="button" class="btn btn-secondary" id="btn-sim-reset" title="Kembalikan motor ke titik awal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              <span>Ulangi</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Simulation Arena Container -->
+        <div class="sim-arena-container" id="sim-arena">
+          
+          <!-- Canvas Element -->
+          <canvas id="simCanvas" width="1024" height="810" role="img" aria-label="Simulasi Berkendara Jalur SIM C"></canvas>
+
+          <!-- Fallback Notice (if asset missing / error) -->
+          <div id="sim-asset-error" class="sim-overlay-error hidden">
+            <div class="error-dialog">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <h3>Pemberitahuan Memuat Aset</h3>
+              <p id="sim-error-message">Memeriksa kelengkapan aset gambar...</p>
+              <button type="button" class="btn btn-primary" id="btn-reload-assets">Muat Ulang</button>
+            </div>
+          </div>
+
+          <!-- HUD (Heads-Up Display) Overlay Top-Right -->
+          <div class="sim-hud" id="sim-hud" aria-live="polite">
+            <div class="hud-item hud-points">
+              <span class="hud-label">POIN UJI</span>
+              <div class="hud-value-group">
+                <span class="hud-value hud-points-val" id="hud-points-value">100</span>
+                <span class="hud-unit">/ 100</span>
+              </div>
+            </div>
+
+            <div class="hud-divider"></div>
+
+            <div class="hud-item hud-speed">
+              <span class="hud-label">KECEPATAN</span>
+              <div class="hud-value-group">
+                <span class="hud-value" id="hud-speed-value">0</span>
+                <span class="hud-unit">km/jam</span>
+              </div>
+            </div>
+
+            <div class="hud-divider"></div>
+
+            <div class="hud-item hud-status">
+              <span class="hud-label">STATUS</span>
+              <span class="hud-status-badge status-stopped" id="hud-status-badge">Berhenti</span>
+            </div>
+          </div>
+
+          <!-- Real-time Warning Toast Overlay -->
+          <div id="sim-warning-toast" class="sim-warning-toast hidden" role="alert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span id="sim-warning-text">Peringatan: Keluar Jalur! (-10 Poin)</span>
+          </div>
+
+          <!-- Hasil ujian muncul setelah kendaraan mencapai garis finis -->
+          <div id="sim-failed-modal" class="sim-overlay-error hidden">
+            <div class="error-dialog failed-dialog">
+              <div class="failed-dialog-icon">
+                <svg id="exam-result-icon" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="15" y1="9" x2="9" y2="15"></line>
+                  <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+              </div>
+              <h3 class="failed-title" id="exam-result-title">Ujian Praktik Belum Lulus</h3>
+              <div class="failed-points-box">
+                <span>Poin Akhir:</span>
+                <strong id="failed-score-value">70</strong>
+                <span>/ 100</span>
+              </div>
+              <p class="failed-desc" id="exam-result-description">
+                Hasil ujian akan ditampilkan setelah Anda mencapai garis finis.
+              </p>
+              <button type="button" class="btn btn-primary btn-retake" id="btn-retake-exam">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                <span>Ulangi Ujian</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Desktop Quick Controls Guide Overlay Bottom-Left -->
+          <div class="sim-instructions-badge">
+            <span class="inst-title">Petunjuk Kontrol:</span>
+            <div class="inst-grid">
+              <div class="inst-row"><kbd>W</kbd> / <kbd>↑</kbd> <span>Gas (Maju)</span></div>
+              <div class="inst-row"><kbd>S</kbd> / <kbd>↓</kbd> <span>Rem</span></div>
+              <div class="inst-row"><kbd>A</kbd> / <kbd>←</kbd> <span>Belok Kiri</span></div>
+              <div class="inst-row"><kbd>D</kbd> / <kbd>→</kbd> <span>Belok Kanan</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Touch / Virtual Screen Controls (for Mobile & Tablet) -->
+        <div class="touch-controls-container" id="touch-controls" aria-label="Kontrol Layar Sentuh Virtual">
+          <div class="touch-column touch-steering">
+            <button type="button" class="touch-btn" id="touch-left" aria-label="Belok Kiri">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>KIRI</span>
+            </button>
+            <button type="button" class="touch-btn" id="touch-right" aria-label="Belok Kanan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+              <span>KANAN</span>
+            </button>
+          </div>
+
+          <div class="touch-column touch-throttle">
+            <button type="button" class="touch-btn touch-btn-gas" id="touch-gas" aria-label="Gas / Maju">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+              <span>GAS</span>
+            </button>
+            <button type="button" class="touch-btn touch-btn-brake" id="touch-brake" aria-label="Rem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+              <span>REM</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 5: HALAMAN INFORMASI & SUMBER REFERENSI
+         ------------------------------------------------------------------ -->
+    <section id="view-information" class="app-view" aria-labelledby="info-heading">
+      <div class="content-wrapper info-page-wrapper">
+        <div class="card page-card">
+          
+          <div class="page-card-header">
+            <h1 id="info-heading" class="page-title">Informasi dan Sumber Referensi</h1>
+            <p class="page-subtitle">
+              Halaman ini menyediakan informasi mengenai sumber referensi pembelajaran dan kedudukan E-Lintas sebagai platform edukasi independen.
+            </p>
+          </div>
+
+          <!-- Section 1: Sumber Materi Pembelajaran -->
+          <div class="info-section">
+            <div class="info-section-title-row">
+              <div class="section-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <h2 class="section-heading">Sumber Materi Pembelajaran</h2>
+            </div>
+            <div class="section-content">
+              <div class="callout callout-blue">
+                <p class="callout-text">
+                  Materi dan kuis ini bersumber/disadur dari <strong>E-Avis Korlantas Polri</strong> (<a href="https://e-avis.korlantas.polri.go.id/ebook/" target="_blank" rel="noopener noreferrer" class="link-external">https://e-avis.korlantas.polri.go.id/ebook/</a>).
+                </p>
+              </div>
+              <p class="text-secondary">
+                E-Avis Korlantas Polri digunakan sebagai salah satu sumber referensi pembelajaran mengenai peraturan, rambu-rambu, dan pengetahuan lalu lintas.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 2: Pernyataan Independensi dan Penafian -->
+          <div class="info-section">
+            <div class="info-section-title-row">
+              <div class="section-icon-box section-icon-warning">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <h2 class="section-heading">Pernyataan Independensi dan Penafian</h2>
+            </div>
+            <div class="section-content">
+              <div class="callout callout-warning">
+                <p class="callout-statement">
+                  "Website ini adalah platform edukasi independen dan TIDAK terafiliasi, bekerjasama, atau mewakili Korlantas Polri. Seluruh materi referensi disadur dari E-Avis Korlantas Polri semata-mata untuk tujuan pembelajaran masyarakat."
+                </p>
+              </div>
+              <p class="text-secondary">
+                Platform ini tidak menyediakan pengesahan, pendaftaran resmi SIM, maupun evaluasi legal kepolisian. Segala proses pengujian resmi hanya dilaksanakan oleh Satpas Korlantas Polri setempat.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 3: Tentang E-Lintas -->
+          <div class="info-section">
+            <div class="info-section-title-row">
+              <div class="section-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="12 6 12 12 16 14"></polygon>
+                </svg>
+              </div>
+              <h2 class="section-heading">Tentang E-Lintas</h2>
+            </div>
+            <div class="section-content">
+              <p class="text-paragraph">
+                E-Lintas merupakan singkatan dari Edukasi &amp; Simulasi Lalu Lintas. E-Lintas adalah platform edukasi digital independen yang dikembangkan untuk membantu masyarakat meningkatkan pengetahuan dan pemahaman mengenai peraturan lalu lintas melalui pembelajaran interaktif, kuis, dan simulasi berkendara berbasis website.
+              </p>
+              <div class="note-box">
+                <svg viewBox="0 0 24 24" class="note-icon" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9.25"></circle>
+                  <circle cx="12" cy="7.25" r="1.45"></circle>
+                  <rect x="10.55" y="10" width="2.9" height="8.25" rx="1.45"></rect>
+                </svg>
+                <p>
+                  Simulasi yang tersedia merupakan sarana pembelajaran digital dan tidak menggantikan pelatihan berkendara secara langsung maupun ujian resmi untuk memperoleh Surat Izin Mengemudi (SIM).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Profil Developer -->
+          <section class="developer-profile">
+            <div class="developer-profile-hero">
+              <div class="developer-profile-visuals" aria-hidden="true">
+                <div class="developer-portrait">
+                  <img src="assets/images/tegar-profile.jpg" alt="">
+                </div>
+                <div class="developer-brand-mark">
+                  <img src="assets/images/tegar-logo.png" alt="">
+                </div>
+              </div>
+              <div class="developer-profile-intro">
+                <p class="developer-eyebrow">PROFIL DEVELOPER</p>
+                <h2 class="developer-name">Tegar Setya Andiputra</h2>
+                <p class="developer-role">Frontend / Full-stack / Mobile App Developer</p>
+                <a class="btn btn-primary portfolio-link" href="https://tegar-setya-andiputra-portofolio.vercel.app/" target="_blank" rel="noopener noreferrer">
+                  <span>Lihat Portofolio Developer</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M14 3h7v7"></path>
+                    <path d="M10 14 21 3"></path>
+                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                  </svg>
+                </a>
+                <p class="developer-quote">“Membangun solusi digital yang responsif, terjangkau, dan berdampak bagi masyarakat.”</p>
+              </div>
+            </div>
+
+            <div class="developer-profile-details">
+              <p class="developer-eyebrow">TENTANG PENGEMBANG</p>
+              <h3 class="developer-details-title">Teknologi untuk masyarakat</h3>
+              <p class="text-paragraph">
+                Halo! Saya Tegar Setya Andiputra, pengembang aplikasi <em>frontend</em>, <em>full-stack</em>, dan <em>mobile</em>. Saya berfokus menciptakan solusi digital yang responsif dan berdampak bagi masyarakat.
+              </p>
+              <ul class="developer-profile-list">
+                <li>
+                  <strong>Tentang Proyek:</strong> Aplikasi <strong>PRACI SIAGA</strong> dibangun sebagai wujud komitmen dalam menghadirkan informasi kesiapsiagaan dan pelayanan masyarakat yang cepat, intuitif, serta dapat diakses kapan saja dan di mana saja.
+                </li>
+                <li>
+                  <strong>Teknologi Utama (<em>Tech Stack</em>):</strong>
+                  <ul>
+                    <li><strong>Frontend / UI:</strong> HTML5, CSS3, JavaScript, Tailwind CSS, dan Bootstrap.</li>
+                    <li><strong>Aplikasi Mobile:</strong> Android Studio.</li>
+                    <li><strong>Backend &amp; Hosting:</strong> Node.js, Vercel, dan Firebase.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Visi &amp; Misi:</strong> Menyediakan layanan yang cepat, andal secara <em>real-time</em>, serta memiliki antarmuka yang ramah pengguna bagi seluruh lapisan masyarakat.
+                </li>
+              </ul>
+            </div>
+
+            <section class="developer-contact" aria-labelledby="developer-contact-title">
+              <div class="developer-contact-copy">
+                <p class="developer-eyebrow">HUBUNGI PENGEMBANG</p>
+                <h3 class="developer-contact-title" id="developer-contact-title">Ada pertanyaan atau ingin berkolaborasi?</h3>
+                <p>Silakan hubungi saya untuk pertanyaan, laporan bug, atau peluang kolaborasi.</p>
+              </div>
+              <dl class="developer-contact-list">
+                <div>
+                  <dt>Email Support</dt>
+                  <dd><a href="mailto:tegarsetyaandiputra1128@gmail.com">tegarsetyaandiputra1128@gmail.com</a></dd>
+                </div>
+                <div>
+                  <dt>WhatsApp</dt>
+                  <dd><a href="https://wa.me/6285134548198" target="_blank" rel="noopener noreferrer">085134548198</a></dd>
+                </div>
+                <div>
+                  <dt>Lokasi</dt>
+                  <dd>Pracimantoro, Wonogiri, Jawa Tengah, Indonesia</dd>
+                </div>
+              </dl>
+            </section>
+          </section>
+
+          <!-- Tombol Navigasi Kembali -->
+          <div class="page-action-row">
+            <button type="button" class="btn btn-primary btn-back-home" data-target="home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Kembali ke Beranda</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       FOOTER WEBSITE
+       ==================================================================== -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-brand-header">
+          <img src="assets/images/logo.png" alt="Logo E-Lintas" class="footer-logo-img">
+          <span class="footer-title">E-Lintas</span>
+        </div>
+        <span class="footer-subtitle">Platform Edukasi Lalu Lintas Independen</span>
+      </div>
+      <div class="footer-links">
+        <span class="footer-copy">&copy; 2026 E-Lintas. Dikembangkan untuk tujuan edukasi. Tegar Setya A.</span>
+        <button type="button" class="footer-link-btn" data-target="information">Informasi &amp; Sumber Referensi</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/simulation.js?v=23"></script>
+  <script src="js/quiz.js?v=1"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
