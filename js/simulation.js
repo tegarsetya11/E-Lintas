@@ -55,6 +55,7 @@
 
     // Fisika Kendaraan
     maxForwardSpeed: 175,     // Kecepatan maju maksimum
+    maxReverseSpeed: 55,      // Kecepatan mundur maksimum
     acceleration: 130,        // Tingkat akselerasi gas
     brakeDecel: 240,          // Daya cengkeram rem
     naturalFriction: 52,      // Perlambatan alami jalan
@@ -67,7 +68,6 @@
     minimumSpeedKmH: 30,      // Kecepatan minimum yang disarankan
     lowSpeedWarningDelaySec: 5,
     offTrackPenalty: 10,      // Poin berkurang saat menyentuh garis biru
-    outOfTrackFailureDelaySec: 20,
     redLightPenalty: 10,
     penaltyCooldownSec: 1.5,  // Jeda waktu antar pengurangan poin agar adil
 
@@ -87,7 +87,7 @@
     y: CONFIG.initialY,
     angle: CONFIG.initialAngle,
     speed: 0,
-    status: 'stopped' // 'stopped', 'moving', 'braking'
+    status: 'stopped' // 'stopped', 'moving', 'braking', 'reversing'
   };
 
   const inputState = {
@@ -97,10 +97,21 @@
     right: false
   };
 
+  let engineAudioContext = null;
+  let engineOscillator = null;
+  let engineHarmonicOscillator = null;
+  let engineSubOscillator = null;
+  let engineFilter = null;
+  let engineGain = null;
+  let engineCompressor = null;
+  let engineAudioUnavailable = false;
+
   // State Ujian Praktik
   let examPoints = CONFIG.maxExamPoints;
   let penaltyCooldownTimer = 0;
-  let outOfTrackFailureTimer = null;
+  let canReverseOffTrack = false;
+  let hasFailedExam = false;
+  let hasShownOffTrackWarning = false;
   let isExamFinished = false;
   let firstSignalPhase = 'red';
   let firstSignalStopTimer = 0;
@@ -122,6 +133,7 @@
   let hudSpeedVal = null;
   let hudSpeedContainer = null;
   let hudPointsVal = null;
+  let hudPointsUnit = null;
   let hudStatusBadge = null;
   let playPauseBtn = null;
   let playStateText = null;
@@ -160,6 +172,7 @@
     hudSpeedVal = document.getElementById('hud-speed-value');
     hudSpeedContainer = document.querySelector('.hud-speed');
     hudPointsVal = document.getElementById('hud-points-value');
+    hudPointsUnit = document.querySelector('.hud-points .hud-unit');
     hudStatusBadge = document.getElementById('hud-status-badge');
     playPauseBtn = document.getElementById('btn-sim-play-pause');
     playStateText = document.getElementById('text-play-state');
@@ -244,6 +257,81 @@
     };
     motorcycleImage.onerror = () => handleLoadError('Motor (motorcycle.png)', CONFIG.assets.motorcycle);
     motorcycleImage.src = CONFIG.assets.motorcycle;
+  }
+
+  function initializeEngineAudio() {
+    if (!engineAudioContext) {
+      if (!window.AudioContext) {
+        if (!engineAudioUnavailable) {
+          console.warn('Efek suara motor tidak tersedia karena browser tidak mendukung Web Audio API.');
+          engineAudioUnavailable = true;
+        }
+        return;
+      }
+
+      engineAudioContext = new window.AudioContext();
+      engineOscillator = engineAudioContext.createOscillator();
+      engineHarmonicOscillator = engineAudioContext.createOscillator();
+      engineSubOscillator = engineAudioContext.createOscillator();
+      const oscillatorGain = engineAudioContext.createGain();
+      const harmonicGain = engineAudioContext.createGain();
+      const subGain = engineAudioContext.createGain();
+      engineFilter = engineAudioContext.createBiquadFilter();
+      engineGain = engineAudioContext.createGain();
+      engineCompressor = engineAudioContext.createDynamicsCompressor();
+
+      engineOscillator.type = 'triangle';
+      engineHarmonicOscillator.type = 'sine';
+      engineSubOscillator.type = 'sine';
+      oscillatorGain.gain.value = 0.55;
+      harmonicGain.gain.value = 0.18;
+      subGain.gain.value = 0.35;
+      engineFilter.type = 'lowpass';
+      engineFilter.frequency.value = 400;
+      engineFilter.Q.value = 0.7;
+      engineGain.gain.value = 0;
+      engineCompressor.threshold.value = -12;
+      engineCompressor.knee.value = 12;
+      engineCompressor.ratio.value = 4;
+      engineCompressor.attack.value = 0.003;
+      engineCompressor.release.value = 0.2;
+
+      engineOscillator.connect(oscillatorGain);
+      engineHarmonicOscillator.connect(harmonicGain);
+      engineSubOscillator.connect(subGain);
+      oscillatorGain.connect(engineFilter);
+      harmonicGain.connect(engineFilter);
+      subGain.connect(engineFilter);
+      engineFilter.connect(engineGain);
+      engineGain.connect(engineCompressor);
+      engineCompressor.connect(engineAudioContext.destination);
+      engineOscillator.start();
+      engineHarmonicOscillator.start();
+      engineSubOscillator.start();
+    }
+
+    if (engineAudioContext.state === 'suspended') {
+      engineAudioContext.resume().catch((error) => {
+        console.error('Gagal mengaktifkan efek suara motor:', error);
+      });
+    }
+  }
+
+  function updateEngineAudio() {
+    if (!engineAudioContext || !engineOscillator || !engineHarmonicOscillator || !engineSubOscillator || !engineFilter || !engineGain) return;
+
+    const now = engineAudioContext.currentTime;
+    const speed = Math.abs(vehicle.speed);
+    const isMoving = isRunning && !isPaused && !isExamFinished && speed > 1;
+    const speedRatio = Math.min(speed / CONFIG.maxForwardSpeed, 1);
+    const throttleAmount = inputState.gas && isMoving ? 12 : 0;
+    const engineFrequency = 60 + speedRatio * 50 + throttleAmount;
+
+    engineOscillator.frequency.setTargetAtTime(engineFrequency, now, 0.08);
+    engineHarmonicOscillator.frequency.setTargetAtTime(engineFrequency * 2, now, 0.16);
+    engineSubOscillator.frequency.setTargetAtTime(engineFrequency * 0.5, now, 0.16);
+    engineFilter.frequency.setTargetAtTime(650 + speedRatio * 650 + (throttleAmount ? 120 : 0), now, 0.16);
+    engineGain.gain.setTargetAtTime(isMoving ? 0.42 + speedRatio * 0.22 : 0, now, 0.16);
   }
 
   /**
@@ -395,14 +483,6 @@
    * 5. DETEKSI BATAS KELUAR JALUR (GARIS WARNA BIRU & RUMPUT)
    * ----------------------------------------------------------------------------
    */
-  function isMotorcycleOffTrack() {
-    return getMotorcycleTrackState() === 'boundary';
-  }
-
-  function isMotorcycleOnGrass() {
-    return getMotorcycleTrackState() === 'grass';
-  }
-
   function getMotorcycleTrackState() {
     if (!trackPixelData) return 'on-track';
 
@@ -461,8 +541,8 @@
       }
     }
 
-    if (touchesBoundary) return 'boundary';
-    return touchesGrass ? 'grass' : 'on-track';
+    if (touchesGrass) return 'grass';
+    return touchesBoundary ? 'boundary' : 'on-track';
   }
 
   /* ----------------------------------------------------------------------------
@@ -496,13 +576,13 @@
     }, 2200);
   }
 
-  function finishExam(wrongRoute = false, forcedFailure = false) {
+  function finishExam(wrongRoute = false) {
     if (isExamFinished) return;
 
     isExamFinished = true;
     vehicle.speed = 0;
     vehicle.status = 'stopped';
-    const passed = !wrongRoute && !forcedFailure && examPoints >= CONFIG.minimumPassPoints;
+    const passed = !wrongRoute && !hasFailedExam && examPoints >= CONFIG.minimumPassPoints;
 
     if (failedScoreValue) {
       failedScoreValue.textContent = examPoints.toString();
@@ -512,15 +592,13 @@
       failedDialog.classList.toggle('exam-passed', passed);
     }
     if (failedTitle) {
-      failedTitle.textContent = wrongRoute
-        ? 'Anda Salah Jalur'
-        : forcedFailure ? 'Anda Gagal' : passed ? 'Ujian Praktik Lulus!' : 'Ujian Praktik Belum Lulus';
+      failedTitle.textContent = passed ? 'Ujian Praktik Lulus!' : 'Ujian Praktik Gagal';
     }
     if (failedDescription) {
-      failedDescription.textContent = wrongRoute
-        ? 'Anda mencapai garis finis pada jalur merah. Perhatikan tanda lampu lalu lintas hijau dan pilih jalur tersebut untuk menyelesaikan ujian.'
-        : forcedFailure
-          ? 'Anda gagal, silakan coba lagi.'
+      failedDescription.textContent = hasFailedExam
+        ? 'Anda keluar jalur saat ujian. Status gagal tetap berlaku meskipun kembali ke jalur dan mencapai garis finis. Coba lagi untuk mengulang ujian.'
+        : wrongRoute
+          ? 'Anda mencapai garis finis pada jalur merah. Perhatikan tanda lampu lalu lintas hijau dan pilih jalur tersebut untuk menyelesaikan ujian.'
         : passed
           ? 'Selamat! Anda menyelesaikan jalur dengan nilai yang memenuhi batas minimum kelulusan.'
           : `Poin Anda berada di bawah batas minimum kelulusan (${CONFIG.minimumPassPoints} poin). Coba lagi untuk melatih pengendalian laju dan ketepatan jalur uji SIM C.`;
@@ -550,26 +628,30 @@
     if (penaltyCooldownTimer > 0) {
       penaltyCooldownTimer -= dt;
     }
-    if (outOfTrackFailureTimer !== null) {
-      outOfTrackFailureTimer -= dt;
-      if (outOfTrackFailureTimer <= 0) {
-        finishExam(false, true);
-        return;
-      }
-    }
-
     // 1. Akselerasi dan Rem
     if (inputState.gas) {
-      vehicle.speed += CONFIG.acceleration * dt;
-      if (vehicle.speed > CONFIG.maxForwardSpeed) {
-        vehicle.speed = CONFIG.maxForwardSpeed;
+      if (vehicle.speed < 0) {
+        vehicle.speed += CONFIG.brakeDecel * dt;
+        if (vehicle.speed > 0) vehicle.speed = 0;
+        vehicle.status = vehicle.speed < -1 ? 'braking' : 'stopped';
+      } else {
+        vehicle.speed += CONFIG.acceleration * dt;
+        if (vehicle.speed > CONFIG.maxForwardSpeed) {
+          vehicle.speed = CONFIG.maxForwardSpeed;
+        }
+        vehicle.status = 'moving';
       }
-      vehicle.status = 'moving';
     } else if (inputState.brake) {
       if (vehicle.speed > 0) {
         vehicle.speed -= CONFIG.brakeDecel * dt;
         if (vehicle.speed < 0) vehicle.speed = 0;
         vehicle.status = vehicle.speed > 1 ? 'braking' : 'stopped';
+      } else if (canReverseOffTrack) {
+        vehicle.speed -= CONFIG.acceleration * dt;
+        if (vehicle.speed < -CONFIG.maxReverseSpeed) {
+          vehicle.speed = -CONFIG.maxReverseSpeed;
+        }
+        vehicle.status = vehicle.speed < -1 ? 'reversing' : 'stopped';
       } else {
         vehicle.speed = 0;
         vehicle.status = 'stopped';
@@ -583,7 +665,7 @@
       } else if (vehicle.speed < 0) {
         vehicle.speed += CONFIG.naturalFriction * dt;
         if (vehicle.speed > 0) vehicle.speed = 0;
-        vehicle.status = vehicle.speed < -1 ? 'moving' : 'stopped';
+        vehicle.status = vehicle.speed < -1 ? 'reversing' : 'stopped';
       } else {
         vehicle.status = 'stopped';
       }
@@ -622,28 +704,67 @@
     if (vehicle.y < margin) vehicle.y = margin;
     if (vehicle.y > CONFIG.worldHeight - margin) vehicle.y = CONFIG.worldHeight - margin;
 
-    // 5. Evaluasi Pelanggaran Ujian Praktik SIM C (Hanya jika kendaraan sedang bergerak)
-    if (Math.abs(vehicle.speed) > 3) {
-      // A. Pelanggaran: Menyentuh Garis Biru Pembatas Jalur
-      const isOffTrack = isMotorcycleOffTrack();
-      if (isOffTrack) {
-        if (outOfTrackFailureTimer === null) {
-          outOfTrackFailureTimer = CONFIG.outOfTrackFailureDelaySec;
-          updateHUD();
-        }
-        if (penaltyCooldownTimer <= 0) {
-          deductPoints(CONFIG.offTrackPenalty, `Melanggar Garis Batas Jalur! (-${CONFIG.offTrackPenalty} Poin)`);
-          penaltyCooldownTimer = CONFIG.penaltyCooldownSec;
-        }
+    let trackState = getMotorcycleTrackState();
+    const candidateX = vehicle.x;
+    const candidateY = vehicle.y;
+    const travelDistance = Math.hypot(candidateX - previousX, candidateY - previousY);
+    const sweepSteps = Math.ceil(travelDistance);
+    let touchedBoundary = trackState === 'boundary';
+    let grassCollision = false;
+    let lastSafeX = previousX;
+    let lastSafeY = previousY;
+    for (let step = 1; !grassCollision && step < sweepSteps; step++) {
+      const sampleRatio = step / sweepSteps;
+      vehicle.x = previousX + ((candidateX - previousX) * sampleRatio);
+      vehicle.y = previousY + ((candidateY - previousY) * sampleRatio);
+      const intermediateState = getMotorcycleTrackState();
+      if (intermediateState === 'boundary') {
+        touchedBoundary = true;
+        lastSafeX = vehicle.x;
+        lastSafeY = vehicle.y;
+      } else if (intermediateState === 'grass') {
+        grassCollision = true;
+      } else {
+        lastSafeX = vehicle.x;
+        lastSafeY = vehicle.y;
       }
+    }
+    if (trackState === 'grass') {
+      grassCollision = true;
+    }
+    vehicle.x = candidateX;
+    vehicle.y = candidateY;
 
+    const isOffTrack = touchedBoundary || trackState === 'boundary' || grassCollision;
+    if (isOffTrack) {
+      canReverseOffTrack = true;
+      hasFailedExam = true;
     }
 
-    if (isMotorcycleOnGrass()) {
-      vehicle.x = previousX;
-      vehicle.y = previousY;
+    // 5. Evaluasi Pelanggaran Ujian Praktik SIM C
+    if (Math.abs(vehicle.speed) > 3 && isOffTrack) {
+      if ((touchedBoundary || trackState === 'boundary') && penaltyCooldownTimer <= 0) {
+        deductPoints(CONFIG.offTrackPenalty, `Melanggar Garis Batas Jalur! (-${CONFIG.offTrackPenalty} Poin)`);
+        penaltyCooldownTimer = CONFIG.penaltyCooldownSec;
+      }
+    }
+    if (isOffTrack && !hasShownOffTrackWarning) {
+      showWarningToast('Keluar jalur dan gagal! Tahan rem untuk mundur ke jalur.');
+      hasShownOffTrackWarning = true;
+    }
+
+    if (grassCollision) {
+      vehicle.x = lastSafeX;
+      vehicle.y = lastSafeY;
       vehicle.speed = 0;
       vehicle.status = 'stopped';
+    } else if (trackState === 'on-track' && !grassCollision) {
+      canReverseOffTrack = false;
+      if (vehicle.speed < 0) {
+        vehicle.speed = 0;
+        vehicle.status = 'stopped';
+      }
+      hasShownOffTrackWarning = false;
     }
 
     if (firstSignalPhase === 'red') {
@@ -708,8 +829,7 @@
       }
     }
 
-    const crossedFinishLine = outOfTrackFailureTimer === null
-      && vehicle.speed > 0
+    const crossedFinishLine = vehicle.speed > 0
       && vy < 0
       && previousY > CONFIG.finishLine.y
       && vehicle.y <= CONFIG.finishLine.y
@@ -720,8 +840,7 @@
       return;
     }
 
-    const crossedWrongFinishLine = outOfTrackFailureTimer === null
-      && vehicle.speed > 0
+    const crossedWrongFinishLine = vehicle.speed > 0
       && vy < 0
       && previousY > CONFIG.wrongFinishLine.y
       && vehicle.y <= CONFIG.wrongFinishLine.y
@@ -730,6 +849,8 @@
     if (crossedWrongFinishLine) {
       finishExam(true);
     }
+
+    updateEngineAudio();
   }
 
   /* ----------------------------------------------------------------------------
@@ -779,6 +900,7 @@
     }
 
     drawFirstTrafficLight();
+    drawFinishTrafficLight();
 
     // 7. Gambar karakter motor (motorcycle.png)
     if (isMotorLoaded && motorcycleImage.complete && motorcycleImage.naturalWidth !== 0) {
@@ -804,27 +926,62 @@
 
   function drawFirstTrafficLight() {
     ctx.save();
+    ctx.translate(422, 60);
+    ctx.rotate(Math.PI / 2);
+
+    ctx.fillStyle = '#004FB5';
+    ctx.fillRect(-12, -22, 24, 44);
+
+    ctx.fillStyle = '#6B7280';
+    ctx.fillRect(-2, 22, 4, 6);
+
     ctx.fillStyle = '#111827';
-    ctx.fillRect(405, 52, 39, 19);
+    ctx.fillRect(-12, -22, 24, 44);
 
     const lights = [
-      { x: 411, color: '#ef4444', inactive: '#592626', active: firstSignalPhase === 'red' },
-      { x: 424, color: '#facc15', inactive: '#574b1f', active: false },
-      { x: 437, color: '#22c55e', inactive: '#1c4d32', active: firstSignalPhase === 'green' }
+      { y: -14, color: '#ef4444', inactive: '#592626', active: firstSignalPhase === 'red' },
+      { y: 0, color: '#facc15', inactive: '#574b1f', active: false },
+      { y: 14, color: '#22c55e', inactive: '#1c4d32', active: firstSignalPhase === 'green' }
     ];
 
-    lights.forEach(({ x, color, inactive, active }) => {
+    lights.forEach(({ y, color, inactive, active }) => {
       ctx.beginPath();
-      ctx.arc(x, 61.5, 4.2, 0, Math.PI * 2);
+      ctx.arc(0, y, 5, 0, Math.PI * 2);
       ctx.fillStyle = active ? color : inactive;
       ctx.fill();
       if (active) {
         ctx.beginPath();
-        ctx.arc(x, 61.5, 5.5, 0, Math.PI * 2);
+        ctx.arc(0, y, 6, 0, Math.PI * 2);
         ctx.strokeStyle = `${color}66`;
         ctx.lineWidth = 2;
         ctx.stroke();
       }
+    });
+
+    ctx.restore();
+  }
+
+  function drawFinishTrafficLight() {
+    ctx.save();
+    ctx.translate(747, 260);
+    ctx.fillStyle = '#111827';
+    ctx.fillRect(-19, -10, 38, 20);
+
+    const lights = [
+      { x: -11, color: '#ef4444' },
+      { x: 11, color: '#22c55e' }
+    ];
+
+    lights.forEach(({ x, color }) => {
+      ctx.beginPath();
+      ctx.arc(x, 0, 5, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(x, 0, 6, 0, Math.PI * 2);
+      ctx.strokeStyle = `${color}66`;
+      ctx.lineWidth = 2;
+      ctx.stroke();
     });
 
     ctx.restore();
@@ -853,18 +1010,19 @@
 
     // 2. Poin Uji Praktik (100 -> 75 threshold)
     if (hudPointsVal) {
-      hudPointsVal.textContent = outOfTrackFailureTimer === null ? examPoints.toString() : 'Gagal';
+      hudPointsVal.textContent = hasFailedExam ? 'Gagal' : examPoints.toString();
       hudPointsVal.className = 'hud-value hud-points-val';
 
-      if (outOfTrackFailureTimer !== null) {
+      if (hasFailedExam || examPoints < CONFIG.minimumPassPoints) {
         hudPointsVal.classList.add('danger');
       } else if (examPoints >= 85) {
         // Hijau: Aman
       } else if (examPoints >= CONFIG.minimumPassPoints) {
         hudPointsVal.classList.add('warn'); // Kuning: Peringatan
-      } else {
-        hudPointsVal.classList.add('danger'); // Merah: Gagal
       }
+    }
+    if (hudPointsUnit) {
+      hudPointsUnit.textContent = hasFailedExam ? '' : '/ 100';
     }
 
     // 3. Status Kendaraan
@@ -873,6 +1031,9 @@
       if (vehicle.status === 'moving') {
         hudStatusBadge.classList.add('status-moving');
         hudStatusBadge.textContent = 'Bergerak';
+      } else if (vehicle.status === 'reversing') {
+        hudStatusBadge.classList.add('status-reversing');
+        hudStatusBadge.textContent = 'Mundur';
       } else if (vehicle.status === 'braking') {
         hudStatusBadge.classList.add('status-braking');
         hudStatusBadge.textContent = 'Mengerem';
@@ -910,6 +1071,7 @@
 
   function startSimulation() {
     if (isRunning) return;
+    initializeEngineAudio();
     isRunning = true;
     isPaused = false;
     isExamFinished = false;
@@ -926,6 +1088,7 @@
       animationFrameId = null;
     }
     clearAllInputs();
+    updateEngineAudio();
   }
 
   function togglePause() {
@@ -941,6 +1104,7 @@
     }
 
     isPaused = !isPaused;
+    updateEngineAudio();
     updatePlayPauseButtonUI();
   }
 
@@ -966,7 +1130,9 @@
     vehicle.status = 'stopped';
     examPoints = CONFIG.maxExamPoints;
     penaltyCooldownTimer = 0;
-    outOfTrackFailureTimer = null;
+    canReverseOffTrack = false;
+    hasFailedExam = false;
+    hasShownOffTrackWarning = false;
     isExamFinished = false;
     firstSignalPhase = 'red';
     firstSignalStopTimer = 0;
@@ -984,6 +1150,7 @@
     }
 
     clearAllInputs();
+    updateEngineAudio();
     updatePlayPauseButtonUI();
     renderStaticScene();
   }
@@ -1007,8 +1174,8 @@
     init: initSimulation,
     start: startSimulation,
     stop: stopSimulation,
-    pause: () => { isPaused = true; updatePlayPauseButtonUI(); },
-    resume: () => { isPaused = false; updatePlayPauseButtonUI(); },
+    pause: () => { isPaused = true; updateEngineAudio(); updatePlayPauseButtonUI(); },
+    resume: () => { isPaused = false; initializeEngineAudio(); updateEngineAudio(); updatePlayPauseButtonUI(); },
     reset: resetSimulation,
     getConfig: () => CONFIG,
     getVehicleState: () => vehicle,

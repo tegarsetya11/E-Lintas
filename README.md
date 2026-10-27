@@ -61,29 +61,38 @@ npx serve .
 
 ---
 
-## 4. Cara Mengoperasikan Simulasi Berkendara
+## 4. Cara Mengoperasikan Kuis dan Simulasi
 
+### A. Kuis Peraturan dan Rambu-Rambu Lalu Lintas
+1. Dari Beranda, pilih **"Kuis Peraturan dan Rambu-Rambu Lalu Lintas"**.
+2. Jawab seluruh **35 soal** secara berurutan: **25 soal rambu lalu lintas** dengan ilustrasi, dilanjutkan **10 soal peraturan dan dasar berkendara**. Setiap soal memiliki empat pilihan dan waktu 30 detik.
+3. Setelah menjawab, baca penjelasan dan tunggu soal berikutnya tampil otomatis: 3 detik untuk jawaban benar atau 5 detik untuk jawaban salah maupun waktu habis. Hasil akhir menampilkan nilai dan tinjauan jawaban.
+
+### B. Simulasi Berkendara
 Masuk ke menu **"Simulasi Berkendara Jalur Uji SIM C"** pada Beranda atau melalui bilah navigasi atas.
 
-### A. Kontrol Keyboard (Desktop / Laptop)
+### Kontrol Keyboard (Desktop / Laptop)
 * **Gas (Maju):** Tombol <kbd>W</kbd> atau Panah Atas <kbd>↑</kbd>
-* **Rem (Berhenti):** Tombol <kbd>S</kbd> atau Panah Bawah <kbd>↓</kbd>
+* **Rem / Mundur:** Tombol <kbd>S</kbd> atau Panah Bawah <kbd>↓</kbd>. Rem memperlambat atau menghentikan motor. Mundur hanya tersedia setelah motor keluar jalur.
 * **Belok Kiri:** Tombol <kbd>A</kbd> atau Panah Kiri <kbd>←</kbd>
 * **Belok Kanan:** Tombol <kbd>D</kbd> atau Panah Kanan <kbd>→</kbd>
 * **Jeda / Lanjut Cepat:** Tombol <kbd>Spasi</kbd>
 * *Mendukung kombinasi tombol:* Anda dapat menekan **Gas + Belok Kiri/Kanan** secara bersamaan.
 
-### B. Kontrol Layar Sentuh Virtual (Smartphone / Tablet)
+### Kontrol Layar Sentuh Virtual (Smartphone / Tablet)
 Pada layar ponsel atau tablet, panel kontrol virtual interaktif akan otomatis muncul di bawah area canvas:
 * **Tombol Gas (Hijau):** Tekan dan tahan untuk menambah kecepatan maju.
-* **Tombol Rem (Merah):** Tekan dan tahan untuk mengerem atau menghentikan kendaraan.
+* **Tombol Rem (Merah):** Tekan dan tahan untuk mengerem atau menghentikan kendaraan. Jika motor keluar jalur, tahan rem untuk mundur kembali ke jalur.
 * **Tombol Kiri & Kanan:** Tekan untuk mengarahkan laju roda motor.
 * *Mendukung Multi-Touch:* Jempol kanan dapat menahan Gas sambil jempol kiri menekan kemudi arah.
 
-### C. Tombol Aksi Permainan & Evaluasi Ujian
+Garis biru batas jalur masih dapat dilintasi, tetapi menyentuhnya langsung mengubah status poin menjadi **Gagal** dan mengurangi poin. Rumput di luar jalur menjadi dinding, sehingga motor berhenti sebelum dapat melintas lebih jauh. Tahan rem untuk mundur kembali ke jalur. Status gagal tetap berlaku sampai ujian diulang, sehingga mencapai garis finis setelah keluar jalur tetap menampilkan hasil gagal dan tombol **Coba Lagi**.
+
+### Tombol Aksi Permainan & Evaluasi Ujian
 * **Jeda / Lanjutkan:** Menghentikan sementara pergerakan motor atau melanjutkan simulasi.
 * **Ulangi:** Mengembalikan posisi motor, arah hadap, dan kecepatan kembali ke titik awal (kotak START), serta mereset poin ujian kembali ke 100 poin.
 * **Kembali:** Berpindah kembali ke Halaman Beranda tanpa membebani memori (*game loop* otomatis dimatikan).
+* **Efek suara:** Suara mesin bernada rendah dan lembut mengikuti laju kendaraan, lalu berhenti saat motor berhenti. Pastikan volume perangkat aktif.
 
 ---
 
@@ -134,12 +143,9 @@ const CONFIG = {
 
 ## 7. Rencana Pengembangan Selanjutnya (Roadmap)
 
-1. **Kuis 1: Peraturan & Rambu-Rambu Lalu Lintas**
-   * Mengintegrasikan bank soal pilihan ganda interaktif mengenai arti warna dan bentuk rambu.
-   * Sistem skor, pembahasan benar/salah secara langsung, dan ringkasan pemahaman.
-2. **Kuis 2: Studi Kasus Uji Teori SIM**
+1. **Kuis 2: Studi Kasus Uji Teori SIM**
    * Pembelajaran skenario visual (persimpangan 4 arah tanpa lampu, marka serong, prioritas ambulans/pemadam).
-3. **Simulasi SIM C Lanjutan (Deteksi Jalur & Sensor Kaki)**
+2. **Simulasi SIM C Lanjutan (Deteksi Jalur & Sensor Kaki)**
    * Menambahkan sensor *collision detection* garis batas putih/kuning.
    * Indikator peringatan jika ban motor menginjak garis marka atau keluar dari lintasan.
    * Fitur lampu sein (kiri/kanan) sebelum memasuki tikungan Y.

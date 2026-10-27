@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=47">
+  <link rel="stylesheet" href="css/style.css?v=53">
 </head>
 <body>
 
@@ -174,43 +174,81 @@
     </section>
 
     <!-- ------------------------------------------------------------------
-         VIEW 2: HALAMAN KUIS 1 - DALAM MASA PENGEMBANGAN
+         VIEW 2: KUIS PERATURAN DAN RAMBU-RAMBU LALU LINTAS
          ------------------------------------------------------------------ -->
     <section id="view-quiz-1" class="app-view" aria-labelledby="quiz1-heading">
-      <div class="content-wrapper page-card-wrapper">
-        <div class="card page-card">
-
-          <div class="dev-badge-row">
-            <span class="dev-quiz-label">Kuis 1</span>
-            <span class="dev-status-pill">🔧 Dalam Masa Pengembangan</span>
-          </div>
-
-          <h1 id="quiz1-heading" class="page-title">Kuis Peraturan dan Rambu-Rambu Lalu Lintas</h1>
-
-          <div class="development-box">
-            <div class="dev-icon-circle">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-              </svg>
+      <div class="content-wrapper quiz-wrapper">
+        <div id="quiz-1-intro" class="quiz-intro-card">
+          <div class="quiz-intro-header">
+            <div class="quiz-intro-icon-box">
+              <img src="assets/images/quiz-sign-icon.png" alt="" class="menu-icon-illustration">
             </div>
-            <h2 class="dev-title">Masih dalam masa pengembangan</h2>
-            <p class="dev-desc">
-              Fitur kuis ini sedang dipersiapkan. Konten soal dan sistem penilaian akan segera tersedia pada versi berikutnya.
-            </p>
+            <div>
+              <span class="quiz-category-badge">Kuis 1</span>
+              <h1 id="quiz1-heading" class="quiz-intro-title">Kuis Peraturan dan Rambu-Rambu Lalu Lintas</h1>
+            </div>
           </div>
-
-          <div class="page-action-row">
-            <button type="button" class="btn btn-primary btn-back-home" data-target="home">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-              <span>Kembali ke Beranda</span>
-            </button>
+          <p class="quiz-intro-desc">Uji pemahaman Anda tentang rambu lalu lintas, peraturan, dan dasar berkendara dengan benar di Indonesia.</p>
+          <div class="quiz-intro-stats">
+            <div class="quiz-stat-item"><strong>35 soal</strong><span>pilihan ganda</span></div>
+            <div class="quiz-stat-item"><strong>25 rambu lalu lintas dan 10 aturan berkendara</strong></div>
+            <div class="quiz-stat-item"><strong>4 pilihan</strong><span>setiap soal</span></div>
+            <div class="quiz-stat-item"><strong>30 detik</strong><span>per soal</span></div>
           </div>
+          <div class="quiz-intro-topics">
+            <h2 class="quiz-topics-title">Materi yang diujikan</h2>
+            <ul class="quiz-topics-list">
+              <li><strong>25 rambu lalu lintas:</strong> soal 1–25 membahas rambu peringatan, larangan, perintah, dan petunjuk.</li>
+              <li><strong>10 aturan berkendara:</strong> soal 26–35 membahas peraturan lalu lintas dan dasar berkendara dengan aman.</li>
+            </ul>
+          </div>
+          <div class="quiz-intro-actions">
+            <button type="button" class="btn btn-quiz-start" id="quiz-1-start-btn">Mulai Kuis</button>
+            <button type="button" class="btn btn-secondary btn-back-home" data-target="home">Kembali ke Beranda</button>
+          </div>
+        </div>
 
+        <div id="quiz-1-session" class="quiz-session hidden" aria-live="polite">
+          <div class="quiz-progress-bar-wrapper">
+            <div class="quiz-progress-info">
+              <span class="quiz-progress-text" id="quiz-1-progress-text">Soal 1 dari 35</span>
+              <div class="quiz-timer-circle-wrapper" aria-label="Sisa waktu">
+                <svg class="quiz-timer-svg" viewBox="0 0 44 44" aria-hidden="true">
+                  <circle cx="22" cy="22" r="18" fill="none" stroke="#E2E8F0" stroke-width="4"></circle>
+                  <circle id="quiz-1-timer-circle" cx="22" cy="22" r="18" fill="none" stroke="#007de2" stroke-width="4" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                </svg>
+                <span class="quiz-timer-text" id="quiz-1-timer">30</span>
+              </div>
+            </div>
+            <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-1-progress-bar"></div></div>
+          </div>
+          <div class="quiz-question-card">
+            <div class="quiz-sign-illustration" id="quiz-1-sign" role="img" aria-label="Ilustrasi rambu lalu lintas"></div>
+            <span class="quiz-q-num" id="quiz-1-question-num">Soal 1</span>
+            <h2 class="quiz-q-text" id="quiz-1-question-text"></h2>
+            <div class="quiz-options" id="quiz-1-options"></div>
+            <div class="quiz-feedback hidden" id="quiz-1-feedback" role="status"></div>
+          </div>
+        </div>
+
+        <div id="quiz-1-result" class="quiz-result-card hidden">
+          <div class="result-header result-header-a" id="quiz-1-result-header">
+            <div class="result-grade-circle" id="quiz-1-result-grade">A</div>
+            <div class="result-score-info">
+              <div class="result-score-value"><span id="quiz-1-result-score">0</span><span class="result-score-unit">/ 100</span></div>
+              <p class="result-grade-text" id="quiz-1-result-grade-text"></p>
+            </div>
+          </div>
+          <div class="result-stats-row">
+            <div class="result-stat"><span class="result-stat-val" id="quiz-1-result-correct">0</span><span class="result-stat-label">Jawaban Benar</span></div>
+            <div class="result-stat result-stat-wrong"><span class="result-stat-val" id="quiz-1-result-total">35</span><span class="result-stat-label">Total Soal</span></div>
+          </div>
+          <h2 class="result-review-title">Tinjauan Jawaban</h2>
+          <div class="result-review-list" id="quiz-1-review"></div>
+          <div class="result-actions">
+            <button type="button" class="btn btn-quiz-start" id="quiz-1-retry-btn">Ulangi Kuis</button>
+            <button type="button" class="btn btn-outline btn-back-home" data-target="home">Beranda</button>
+          </div>
         </div>
       </div>
     </section>
@@ -383,7 +421,7 @@
                   <polyline points="1 4 1 10 7 10"></polyline>
                   <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
                 </svg>
-                <span>Ulangi Ujian</span>
+                <span>Coba Lagi</span>
               </button>
             </div>
           </div>
@@ -585,12 +623,17 @@
               </div>
               <dl class="developer-contact-list">
                 <div>
-                  <dt>Email Support</dt>
-                  <dd><a href="mailto:tegarsetyaandiputra1128@gmail.com">tegarsetyaandiputra1128@gmail.com</a></dd>
-                </div>
-                <div>
-                  <dt>WhatsApp</dt>
-                  <dd><a href="https://wa.me/6285134548198" target="_blank" rel="noopener noreferrer">085134548198</a></dd>
+                  <dt>Hubungi Developer</dt>
+                  <dd>
+                    <a class="btn btn-primary portfolio-link" href="https://tegar-setya-andiputra-portofolio.vercel.app/" target="_blank" rel="noopener noreferrer">
+                      Hubungi Developer
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M14 3h7v7"></path>
+                        <path d="M10 14 21 3"></path>
+                        <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                      </svg>
+                    </a>
+                  </dd>
                 </div>
                 <div>
                   <dt>Lokasi</dt>
@@ -630,15 +673,15 @@
         <span class="footer-subtitle">Platform Edukasi Lalu Lintas Independen</span>
       </div>
       <div class="footer-links">
-        <span class="footer-copy">&copy; 2026 E-Lintas. Dikembangkan untuk tujuan edukasi. Tegar Setya A.</span>
+        <span class="footer-copy">&copy; 2026 E-Lintas. Dikembangkan untuk tujuan edukasi. Tegar Setya Andiputra</span>
         <button type="button" class="footer-link-btn" data-target="information">Informasi &amp; Sumber Referensi</button>
       </div>
     </div>
   </footer>
 
   <!-- Application Logic Scripts -->
-  <script src="js/simulation.js?v=23"></script>
-  <script src="js/quiz.js?v=1"></script>
+  <script src="js/simulation.js?v=47"></script>
+  <script src="js/quiz.js?v=9"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

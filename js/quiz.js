@@ -3,13 +3,14 @@
  * E-LINTAS - QUIZ MODULE (quiz.js)
  * ==============================================================================
  * Sistem Kuis Interaktif E-Lintas
- * - Kuis 1: Peraturan dan Rambu-Rambu Lalu Lintas (25 Soal)
+ * - Kuis 1: Peraturan dan Rambu-Rambu Lalu Lintas (35 Soal)
  * - Kuis 2: Studi Kasus Uji Teori SIM (Persimpangan, Prioritas, Marka, APILL) (20 Soal)
  *
  * Fitur:
  * - Timer countdown per soal (30 detik)
- * - Navigasi soal berikutnya / sebelumnya
+ * - Ilustrasi rambu untuk 25 soal pertama Kuis 1
  * - Feedback langsung (benar/salah + penjelasan)
+ * - Pindah otomatis ke soal berikutnya setelah countdown jawaban
  * - Halaman hasil akhir dengan skor, grade, dan review jawaban
  * ==============================================================================
  */
@@ -23,182 +24,386 @@
 
   /** KUIS 1: Peraturan dan Rambu-Rambu Lalu Lintas */
   const QUIZ_1_QUESTIONS = [
+    // Soal 1-25: pengenalan dan arti rambu lalu lintas.
     {
       id: 1,
-      question: 'Rambu lalu lintas berbentuk lingkaran dengan garis diagonal merah dan gambar tertentu di dalamnya termasuk dalam kelompok rambu apa?',
-      options: ['Rambu Peringatan', 'Rambu Larangan', 'Rambu Perintah', 'Rambu Petunjuk'],
-      correct: 1,
-      explanation: 'Rambu Larangan berbentuk lingkaran dengan latar putih, garis tepi dan diagonal merah. Rambu ini melarang pengguna jalan melakukan hal yang digambarkan di dalamnya.'
+      question: 'Apa arti rambu lingkaran merah dengan bidang putih mendatar di tengahnya?',
+      options: ['Dilarang masuk dari arah tersebut', 'Dilarang parkir', 'Wajib berjalan lurus', 'Tempat penyeberangan'],
+      correct: 0,
+      explanation: 'Lingkaran merah dengan bidang putih mendatar adalah rambu dilarang masuk. Kendaraan tidak boleh memasuki jalan dari arah rambu tersebut.'
     },
     {
       id: 2,
-      question: 'Rambu berbentuk segitiga sama sisi dengan warna dasar kuning dan tepi hitam berfungsi sebagai:',
-      options: ['Rambu Petunjuk', 'Rambu Perintah', 'Rambu Peringatan', 'Rambu Larangan'],
+      question: 'Rambu huruf P dengan garis merah menyilang berarti:',
+      options: ['Parkir wajib di sisi kiri', 'Tempat parkir khusus', 'Dilarang parkir', 'Parkir hanya untuk kendaraan kecil'],
       correct: 2,
-      explanation: 'Rambu Peringatan berbentuk segitiga sama sisi dengan warna dasar kuning (atau oranye) dan tepi hitam. Rambu ini memberi peringatan kepada pengguna jalan tentang kondisi berbahaya di depan.'
+      explanation: 'Huruf P menandakan parkir, sedangkan garis merah menyilang menunjukkan larangan parkir di area tersebut.'
     },
     {
       id: 3,
-      question: 'Batas kecepatan maksimum di jalan bebas hambatan (tol) dalam kota adalah:',
-      options: ['60 km/jam', '80 km/jam', '100 km/jam', '120 km/jam'],
-      correct: 1,
-      explanation: 'Berdasarkan PP No. 79 Tahun 2013, batas kecepatan di jalan tol dalam kota adalah 80 km/jam dan di jalan tol luar kota adalah 100 km/jam.'
+      question: 'Apa arti rambu huruf S yang dicoret tanda silang merah?',
+      options: ['Dilarang berhenti', 'Dilarang menyalip', 'Wajib berhenti', 'Akhir batas kecepatan'],
+      correct: 0,
+      explanation: 'Huruf S dengan tanda silang merah berarti dilarang berhenti di lokasi yang diatur rambu tersebut.'
     },
     {
       id: 4,
-      question: 'Helm yang wajib digunakan oleh pengendara sepeda motor di Indonesia harus memenuhi standar:',
-      options: ['ISO 9001', 'SNI (Standar Nasional Indonesia)', 'ASTM International', 'CE EN 1078'],
+      question: 'Rambu lingkaran putih bertepi merah dengan angka 40 menunjukkan:',
+      options: ['Kecepatan minimum 40 km/jam', 'Kecepatan maksimum 40 km/jam', 'Jarak 40 meter ke persimpangan', 'Anjuran melaju 40 km/jam'],
       correct: 1,
-      explanation: 'Berdasarkan UU No. 22 Tahun 2009 pasal 106 ayat 8, setiap pengemudi dan penumpang sepeda motor wajib menggunakan helm yang memenuhi Standar Nasional Indonesia (SNI).'
+      explanation: 'Angka pada rambu larangan berbentuk lingkaran putih bertepi merah menunjukkan batas kecepatan maksimum yang tidak boleh dilampaui.'
     },
     {
       id: 5,
-      question: 'Ketika akan berbelok atau berpindah jalur, pengendara wajib memberi isyarat dengan:',
-      options: ['Klakson', 'Lampu sein minimal 30 meter sebelum titik belok', 'Lampu hazard', 'Gerakan tangan'],
+      question: 'Rambu panah kiri yang dicoret garis merah berarti:',
+      options: ['Belok kiri wajib dilakukan', 'Dilarang berbelok ke kiri', 'Dilarang berhenti', 'Jalan satu arah ke kiri'],
       correct: 1,
-      explanation: 'UU No. 22 Tahun 2009 mewajibkan pengemudi memberi isyarat lampu sein sekurang-kurangnya 30 meter sebelum melakukan gerakan membelok atau berpindah lajur.'
+      explanation: 'Panah kiri yang dicoret merah melarang kendaraan berbelok ke kiri pada persimpangan atau ruas jalan tersebut.'
     },
     {
       id: 6,
-      question: 'Garis marka jalan berwarna kuning di tengah jalur menandakan:',
-      options: ['Batas kecepatan', 'Batas jalur berlawanan arah, tidak boleh dilewati', 'Zona sekolah', 'Area parkir'],
+      question: 'Apa arti rambu panah kanan yang dicoret merah?',
+      options: ['Belok kanan wajib dilakukan', 'Dilarang berbelok ke kanan', 'Dilarang mendahului', 'Jalan satu arah ke kanan'],
       correct: 1,
-      explanation: 'Garis marka berwarna kuning memisahkan arus lalu lintas dari dua arah berlawanan. Garis kuning utuh tidak boleh dilintasi, sedangkan garis kuning putus-putus boleh dilewati jika aman.'
+      explanation: 'Panah kanan yang dicoret merah melarang kendaraan berbelok ke kanan pada persimpangan atau ruas jalan tersebut.'
     },
     {
       id: 7,
-      question: 'Jarak minimum menyalip kendaraan lain di jalan adalah:',
-      options: ['Boleh kapan saja jika jalur depan kosong', 'Hanya di jalan tol', 'Dilarang saat garis marka utuh (garis putih penuh) di tengah jalan', 'Harus ada jarak 50 meter di belakang'],
-      correct: 2,
-      explanation: 'Menyalip dilarang saat terdapat marka garis utuh (tidak terputus) di tengah jalan. Garis tersebut menandakan bahwa kondisi jalan tidak aman untuk menyalip.'
+      question: 'Rambu panah putar balik yang dicoret merah menandakan:',
+      options: ['Putar balik wajib dilakukan', 'Dilarang putar balik di lokasi tersebut', 'Jalan berakhir', 'Kendaraan wajib berputar di depan'],
+      correct: 1,
+      explanation: 'Tanda larangan pada panah putar balik berarti pengendara tidak boleh melakukan putar balik di lokasi tersebut.'
     },
     {
       id: 8,
-      question: 'Kendaraan manakah yang mendapat prioritas utama di jalan raya?',
-      options: ['Kendaraan pemerintah dengan sirine', 'Kendaraan yang datang dari kanan', 'Kendaraan gawat darurat (ambulans, pemadam kebakaran, mobil polisi) dengan sirine menyala', 'Truk besar'],
-      correct: 2,
-      explanation: 'Berdasarkan UU No. 22 Tahun 2009 pasal 134, kendaraan bermotor yang mendapat prioritas adalah: pemadam kebakaran, ambulans, kendaraan untuk memberi pertolongan kecelakaan, kendaraan pimpinan negara, dan kendaraan pengawalan oleh kepolisian.'
+      question: 'Apa yang dilarang oleh rambu dua kendaraan dengan garis merah?',
+      options: ['Dilarang mendahului kendaraan lain', 'Wajib menjaga jarak dua meter', 'Jalur hanya untuk dua kendaraan', 'Dilarang parkir'],
+      correct: 0,
+      explanation: 'Rambu tersebut melarang pengendara mendahului kendaraan lain pada ruas jalan yang ditunjuk.'
     },
     {
       id: 9,
-      question: 'Rambu petunjuk berwarna hijau umumnya menandakan:',
-      options: ['Tempat istirahat', 'Petunjuk arah jalan non-tol', 'Fasilitas umum', 'Petunjuk arah jalan tol atau jalan bebas hambatan'],
-      correct: 3,
-      explanation: 'Rambu petunjuk berwarna hijau digunakan untuk menunjukkan petunjuk arah pada jalan bebas hambatan (tol). Warna biru digunakan untuk jalan non-tol.'
+      question: 'Rambu peringatan bergambar kendaraan tergelincir memperingatkan tentang:',
+      options: ['Jalan licin', 'Jalan menurun', 'Jalan satu arah', 'Dilarang berhenti'],
+      correct: 0,
+      explanation: 'Rambu jalan licin mengingatkan pengendara untuk mengurangi kecepatan dan menghindari pengereman atau manuver mendadak.'
     },
     {
       id: 10,
-      question: 'Apa yang dimaksud dengan marka zebra cross (penyeberangan pejalan kaki)?',
-      options: ['Tempat parkir kendaraan', 'Tempat menunggu bus', 'Jalur khusus untuk pejalan kaki menyeberang, kendaraan wajib mendahulukan pejalan kaki', 'Batas wilayah kecepatan'],
-      correct: 2,
-      explanation: 'Zebra cross adalah marka berupa garis-garis putih yang sejajar. Kendaraan bermotor wajib mendahulukan pejalan kaki yang sedang menyeberang di zebra cross sesuai UU No. 22 Tahun 2009.'
+      question: 'Rambu peringatan bergambar permukaan jalan bergelombang berarti:',
+      options: ['Jalan bergelombang di depan', 'Jalan licin', 'Jalan buntu', 'Wajib mengikuti bundaran'],
+      correct: 0,
+      explanation: 'Rambu jalan bergelombang memperingatkan adanya permukaan jalan yang tidak rata. Kurangi kecepatan dan kendalikan kendaraan.'
     },
     {
       id: 11,
-      question: 'Batas kecepatan untuk pengendara sepeda motor di kawasan permukiman adalah:',
-      options: ['30 km/jam', '25 km/jam', '40 km/jam', '50 km/jam'],
+      question: 'Rambu bergambar anak-anak yang menyeberang mengingatkan pengendara bahwa:',
+      options: ['Ada kawasan atau penyeberangan anak-anak di depan', 'Anak-anak dilarang menyeberang', 'Jalan khusus untuk bermain', 'Kendaraan wajib berhenti di sepanjang jalan'],
       correct: 0,
-      explanation: 'Sesuai PP No. 79 Tahun 2013, batas kecepatan di kawasan permukiman adalah 30 km/jam untuk semua kendaraan bermotor.'
+      explanation: 'Rambu anak-anak memperingatkan pengendara agar waspada terhadap anak-anak yang mungkin menyeberang atau beraktivitas di sekitar jalan.'
     },
     {
       id: 12,
-      question: 'Menyalakan lampu utama sepeda motor di siang hari bertujuan untuk:',
-      options: ['Kewajiban hukum agar lebih mudah terlihat pengendara lain', 'Menghemat daya aki', 'Menandakan kendaraan baru', 'Tidak ada fungsi khusus'],
+      question: 'Rambu peringatan persimpangan jalan menunjukkan bahwa:',
+      options: ['Ada persimpangan jalan di depan', 'Jalan hanya satu arah', 'Dilarang melewati persimpangan', 'Tempat parkir berada di depan'],
       correct: 0,
-      explanation: 'UU No. 22 Tahun 2009 mewajibkan pengemudi sepeda motor untuk menyalakan lampu utama pada siang hari. Ini meningkatkan visibilitas motor di jalan dan mengurangi risiko kecelakaan.'
+      explanation: 'Rambu persimpangan memperingatkan adanya pertemuan arus jalan di depan. Kurangi kecepatan dan perhatikan kendaraan dari arah lain.'
     },
     {
       id: 13,
-      question: 'Jika rambu "STOP" terpasang di suatu persimpangan, pengendara harus:',
-      options: ['Melambat dan melihat kondisi persimpangan', 'Berhenti penuh sebelum garis berhenti, meskipun jalan kosong, kemudian periksa kondisi aman', 'Berhenti jika ada kendaraan lain', 'Memprioritaskan kendaraan dari kiri'],
+      question: 'Apa tindakan yang diwajibkan oleh rambu STOP?',
+      options: ['Kurangi kecepatan tanpa berhenti', 'Berhenti penuh, periksa keadaan, lalu lanjut jika aman', 'Berhenti hanya jika ada kendaraan lain', 'Membunyikan klakson sebelum melintas'],
       correct: 1,
-      explanation: 'Rambu STOP (garis segidelapan merah) mewajibkan kendaraan berhenti penuh (complete stop) sebelum garis stop, periksa kondisi lalu lintas dari semua arah, dan baru melanjutkan perjalanan jika aman.'
+      explanation: 'Rambu STOP mewajibkan kendaraan berhenti penuh sebelum garis berhenti atau persimpangan, kemudian melanjutkan perjalanan setelah dipastikan aman.'
     },
     {
       id: 14,
-      question: 'Sabuk keselamatan (safety belt) wajib digunakan oleh:',
-      options: ['Hanya pengemudi saja', 'Pengemudi dan semua penumpang di kursi depan', 'Pengemudi dan semua penumpang di semua kursi', 'Tidak diwajibkan untuk penumpang belakang'],
-      correct: 2,
-      explanation: 'UU No. 22 Tahun 2009 pasal 106 mewajibkan pengemudi dan seluruh penumpang (di semua kursi) untuk mengenakan sabuk keselamatan ketika berkendara dengan kendaraan roda empat atau lebih.'
+      question: 'Rambu lingkaran biru dengan tiga panah melingkar mewajibkan pengendara untuk:',
+      options: ['Mengikuti arah putaran bundaran', 'Berhenti sebelum bundaran', 'Berputar balik sebelum bundaran', 'Memilih jalur paling kanan'],
+      correct: 0,
+      explanation: 'Rambu perintah bundaran mewajibkan pengendara mengikuti arah putaran lalu lintas pada bundaran.'
     },
     {
       id: 15,
-      question: 'Marka garis putus-putus putih di tengah jalan menandakan:',
-      options: ['Batas jalur berlawanan arah yang tidak boleh dilewati', 'Pemisah jalur searah yang boleh dilewati jika aman', 'Zona pejalan kaki', 'Batas jalan berbayar'],
+      question: 'Rambu huruf P berwarna putih pada lingkaran biru menunjukkan:',
+      options: ['Dilarang parkir', 'Tempat parkir', 'Dilarang berhenti', 'Parkir khusus kendaraan besar'],
       correct: 1,
-      explanation: 'Marka garis putus-putus putih di tengah jalan adalah pemisah jalur yang diperbolehkan untuk dilewati atau digunakan sebagai area menyalip apabila kondisi jalan di depan kosong dan aman.'
+      explanation: 'Huruf P putih pada lingkaran biru menunjukkan tempat parkir yang disediakan atau diperbolehkan.'
     },
     {
       id: 16,
-      question: 'Pengendara motor yang menggunakan HP saat berkendara dapat dikenakan sanksi karena:',
-      options: ['Melanggar etika berkendara', 'Melanggar UU No. 22 Tahun 2009 tentang Lalu Lintas dan Angkutan Jalan', 'Hanya berlaku untuk pengemudi mobil', 'Tidak ada aturan tertulis mengenai hal ini'],
-      correct: 1,
-      explanation: 'UU No. 22 Tahun 2009 pasal 283 melarang pengemudi mengoperasikan perangkat elektronik (termasuk HP) yang dapat mengganggu konsentrasi saat berkendara. Pelanggar dapat dikenai denda atau kurungan.'
+      question: 'Rambu peringatan bergambar jalan yang menyempit menunjukkan bahwa:',
+      options: ['Lebar jalan berkurang di depan', 'Jalan berakhir tanpa jalan keluar', 'Jalur khusus kendaraan besar', 'Ada persimpangan bundaran di depan'],
+      correct: 0,
+      explanation: 'Rambu jalan menyempit memperingatkan bahwa lebar jalan berkurang. Kurangi kecepatan dan bersiaplah menyesuaikan posisi kendaraan.'
     },
     {
       id: 17,
-      question: 'Rambu lingkaran dengan garis merah diagonal tanpa gambar di dalamnya ("O" dengan garis merah diagonal) berarti:',
-      options: ['Rambu umum area larangan', 'Dilarang masuk (No Entry) untuk semua kendaraan', 'Kawasan bebas polusi', 'Jalur satu arah'],
-      correct: 1,
-      explanation: 'Rambu lingkaran merah polos (tanpa gambar, dengan garis diagonal merah) adalah rambu "Dilarang Masuk" (No Entry). Artinya semua kendaraan dilarang memasuki jalan tersebut dari arah rambu dipasang.'
+      question: 'Apa arti rambu peringatan yang menunjukkan jalan menanjak?',
+      options: ['Ada tanjakan di depan', 'Jalan menurun tajam', 'Jalan hanya untuk kendaraan kecil', 'Dilarang menggunakan gigi rendah'],
+      correct: 0,
+      explanation: 'Rambu jalan menanjak memperingatkan adanya tanjakan di depan. Jaga kendali kendaraan dan sesuaikan kecepatan.'
     },
     {
       id: 18,
-      question: 'Batas kecepatan di lingkungan sekolah atau zona keselamatan adalah:',
-      options: ['25 km/jam', '20 km/jam', '30 km/jam', '40 km/jam'],
-      correct: 2,
-      explanation: 'Di kawasan tertentu seperti zona sekolah, permukiman, dan kawasan keselamatan, batas kecepatan ditetapkan 30 km/jam sesuai peraturan lalu lintas yang berlaku di Indonesia.'
+      question: 'Apa arti rambu peringatan yang menunjukkan jalan menurun?',
+      options: ['Ada turunan di depan', 'Ada tanjakan di depan', 'Jalan buntu', 'Dilarang melewati kendaraan lain'],
+      correct: 0,
+      explanation: 'Rambu jalan menurun memperingatkan adanya turunan di depan. Kendalikan kecepatan dan kendaraan, terutama saat melintasi turunan.'
     },
     {
       id: 19,
-      question: 'Rambu berbentuk lingkaran dengan latar biru dan angka putih menunjukkan:',
-      options: ['Larangan melewati angka tersebut', 'Kecepatan minimum wajib yang harus dipatuhi', 'Jarak ke kota berikutnya', 'Kecepatan maksimum yang disarankan'],
-      correct: 1,
-      explanation: 'Rambu lingkaran biru dengan angka putih adalah rambu perintah kecepatan minimum. Kendaraan wajib melaju minimal dengan kecepatan yang tertera agar tidak menghambat arus lalu lintas.'
+      question: 'Rambu peringatan bergambar jembatan menunjukkan bahwa:',
+      options: ['Ada jembatan di depan', 'Jalan berakhir di tepi sungai', 'Kendaraan wajib berhenti di jembatan', 'Jembatan hanya untuk pejalan kaki'],
+      correct: 0,
+      explanation: 'Rambu jembatan memperingatkan pengendara tentang jembatan di depan. Kurangi kecepatan dan perhatikan kondisi jalan.'
     },
     {
       id: 20,
-      question: 'Ketika lampu lalu lintas berwarna kuning (amber) menyala:',
-      options: ['Kendaraan boleh terus melaju kencang', 'Kendaraan yang belum melewati garis stop wajib bersiap berhenti dengan aman', 'Segera mempercepat kendaraan sebelum merah', 'Kendaraan dari arah berlawanan boleh melaju'],
+      question: 'Apa yang harus dilakukan saat melihat rambu perlintasan kereta api dengan palang pintu?',
+      options: ['Tetap melaju karena palang akan terbuka otomatis', 'Kurangi kecepatan dan berhenti jika palang tertutup atau ada kereta', 'Mendahului kendaraan lain sebelum rel', 'Berhenti hanya jika ada petugas'],
       correct: 1,
-      explanation: 'Lampu kuning adalah tanda peringatan bahwa lampu akan segera berubah menjadi merah. Kendaraan yang belum melewati garis stop wajib bersiap untuk berhenti. Mempercepat kendaraan saat kuning adalah pelanggaran berbahaya.'
+      explanation: 'Rambu ini memperingatkan adanya perlintasan kereta api dengan palang pintu. Patuhi palang dan isyarat yang ada, serta berhenti saat kereta akan melintas.'
     },
     {
       id: 21,
-      question: 'Marka garis serong (diagonal) berwarna putih atau kuning di persimpangan atau ujung jalan menandakan:',
-      options: ['Jalur penyeberangan pejalan kaki', 'Area yang tidak boleh dimasuki atau ditempati kendaraan', 'Jalur bus khusus', 'Pembatas jalan biasa'],
+      question: 'Apa yang harus dilakukan saat mendekati perlintasan kereta api tanpa palang pintu?',
+      options: ['Melaju tanpa melihat karena tidak ada palang', 'Berhenti atau kurangi kecepatan, tengok kiri-kanan, dan pastikan aman sebelum melintas', 'Membunyikan klakson lalu langsung melintas', 'Mengikuti kendaraan di depan tanpa memeriksa keadaan'],
       correct: 1,
-      explanation: 'Marka serong (garis-garis diagonal) menandakan area yang tidak boleh dimasuki atau ditempati kendaraan, misalnya di dekat persimpangan atau area netral di tengah jalan.'
+      explanation: 'Pada perlintasan tanpa palang, pengendara harus waspada, melihat ke kiri dan kanan, serta memastikan tidak ada kereta sebelum melintas.'
     },
     {
       id: 22,
-      question: 'Saat berkendara di malam hari dalam kondisi hujan deras, lampu yang wajib dinyalakan adalah:',
-      options: ['Lampu hazard saja', 'Lampu utama (dekat) dan lampu belakang', 'Lampu jauh saja', 'Tidak perlu lampu jika ada lampu jalan'],
+      question: 'Apa arti rambu larangan membunyikan klakson?',
+      options: ['Klakson hanya boleh digunakan pada malam hari', 'Pengendara tidak boleh membunyikan klakson di area tersebut kecuali untuk keadaan darurat', 'Klakson wajib dibunyikan sebelum melewati area tersebut', 'Kendaraan tanpa klakson dilarang melintas'],
       correct: 1,
-      explanation: 'Saat kondisi jarak pandang terbatas (malam/hujan deras), wajib menyalakan lampu utama (lampu dekat) dan lampu belakang. Lampu jauh (high beam) sebaiknya tidak digunakan saat ada kendaraan dari arah berlawanan karena dapat menyilaukan.'
+      explanation: 'Rambu ini melarang penggunaan klakson di area yang ditentukan. Gunakan klakson hanya sesuai kebutuhan dan ketentuan keselamatan.'
     },
     {
       id: 23,
-      question: 'Apa yang dimaksud "Defensive Driving" atau berkendara defensif?',
-      options: ['Berkendara sepelan mungkin agar aman', 'Teknik berkendara yang mengutamakan keselamatan dengan mengantisipasi potensi bahaya dari pengguna jalan lain', 'Menghindari jalan ramai', 'Selalu menggunakan jalur kanan'],
-      correct: 1,
-      explanation: 'Defensive Driving adalah teknik berkendara yang mengutamakan keselamatan dengan cara selalu waspada, mengantisipasi risiko, menjaga jarak aman, dan siap merespons perilaku pengguna jalan lain yang tidak terduga.'
+      question: 'Rambu jalur khusus sepeda menunjukkan bahwa:',
+      options: ['Jalur tersebut diperuntukkan bagi pesepeda', 'Sepeda dilarang melintas', 'Sepeda motor wajib menggunakan jalur itu', 'Tempat parkir sepeda berada di depan'],
+      correct: 0,
+      explanation: 'Rambu jalur khusus sepeda menunjukkan jalur yang disediakan bagi pesepeda. Pengendara kendaraan lain harus menghormati jalur tersebut.'
     },
     {
       id: 24,
-      question: 'Berapa jarak aman minimum yang harus dijaga antara kendaraan bermotor di belakang kendaraan di depan pada kecepatan 60 km/jam?',
-      options: ['5 meter', '15 meter', '30-40 meter (setara ~3 detik waktu reaksi)', '10 meter'],
-      correct: 2,
-      explanation: 'Jarak aman minimum disarankan menggunakan "aturan 3 detik": pilih titik tetap di jalan, saat kendaraan di depan melewatinya, hitung 3 detik sebelum kendaraan Anda melewati titik yang sama. Pada 60 km/jam, ini setara sekitar 50 meter.'
+      question: 'Rambu peringatan tempat penyeberangan pejalan kaki mengingatkan pengendara untuk:',
+      options: ['Waspada dan mengurangi kecepatan karena ada penyeberangan pejalan kaki', 'Berhenti dan parkir di area tersebut', 'Membunyikan klakson agar pejalan kaki menepi', 'Menggunakan jalur khusus sepeda'],
+      correct: 0,
+      explanation: 'Rambu ini menandakan tempat penyeberangan pejalan kaki. Kurangi kecepatan dan dahulukan pejalan kaki yang menyeberang.'
     },
     {
       id: 25,
-      question: 'Tanda YIELD (segitiga terbalik dengan tepi merah) mewajibkan pengendara untuk:',
-      options: ['Berhenti penuh seperti rambu STOP', 'Memberikan prioritas kepada kendaraan dari arah jalan utama, boleh melanjutkan jika aman tanpa berhenti penuh', 'Memberi jalan kepada pejalan kaki saja', 'Menyalakan lampu sein kiri'],
+      question: 'Apa arti rambu peringatan jalan berliku di depan?',
+      options: ['Ada beberapa tikungan berurutan di depan', 'Jalan menyempit di depan', 'Dilarang berbelok di persimpangan', 'Jalan hanya satu arah'],
+      correct: 0,
+      explanation: 'Rambu jalan berliku memperingatkan adanya beberapa tikungan berurutan. Kurangi kecepatan dan kendalikan kendaraan saat melintas.'
+    },
+    // Soal 26-35: peraturan dan dasar berkendara aman.
+    {
+      id: 26,
+      question: 'Apa standar helm yang wajib digunakan pengendara dan penumpang sepeda motor di Indonesia?',
+      options: ['Helm apa saja yang ukurannya sesuai', 'Helm berlabel SNI dan terpasang dengan benar', 'Helm sepeda tanpa pengikat', 'Tidak perlu helm jika berkendara dekat'],
       correct: 1,
-      explanation: 'Rambu YIELD (beri jalan) tidak mewajibkan berhenti penuh seperti STOP. Kendaraan harus memperlambat dan memberikan prioritas kepada kendaraan yang memiliki hak jalan (right of way) dari arah jalan utama, dan boleh melanjutkan ketika aman.'
+      explanation: 'Pengendara dan penumpang sepeda motor wajib menggunakan helm yang memenuhi Standar Nasional Indonesia (SNI). Pastikan helm terpasang erat dan tali pengikatnya dikunci.'
+    },
+    {
+      id: 27,
+      question: 'Apa yang wajib dilakukan pengendara sepeda motor terhadap lampu utama pada siang hari?',
+      options: ['Menyalakannya saat hujan saja', 'Menyalakannya hanya di jalan tol', 'Menyalakannya saat berkendara', 'Menggantinya dengan lampu hazard'],
+      correct: 2,
+      explanation: 'Pengendara sepeda motor wajib menyalakan lampu utama pada siang hari agar lebih mudah terlihat oleh pengguna jalan lain.'
+    },
+    {
+      id: 28,
+      question: 'Apa tindakan yang benar sebelum berbelok atau berpindah jalur?',
+      options: ['Langsung bergerak jika tidak ada klakson', 'Nyalakan lampu sein, periksa kondisi sekitar, lalu bergerak jika aman', 'Nyalakan lampu hazard dan tetap bergerak', 'Ikuti kendaraan di depan tanpa memeriksa spion'],
+      correct: 1,
+      explanation: 'Berikan isyarat dengan lampu sein sebelum berbelok atau berpindah jalur. Periksa spion dan kondisi sekitar, lalu lakukan manuver hanya jika aman.'
+    },
+    {
+      id: 29,
+      question: 'Mengapa pengendara tidak boleh menggunakan ponsel sambil mengendarai kendaraan?',
+      options: ['Karena mengganggu konsentrasi dan meningkatkan risiko kecelakaan', 'Karena membuat kendaraan lebih boros bahan bakar', 'Karena ponsel hanya boleh digunakan penumpang depan', 'Karena mengurangi jarak pandang lampu kendaraan'],
+      correct: 0,
+      explanation: 'Mengoperasikan ponsel dapat mengalihkan perhatian dari jalan dan mengganggu konsentrasi. Berhentilah di tempat yang aman sebelum menggunakan ponsel.'
+    },
+    {
+      id: 30,
+      question: 'Saat lampu lalu lintas berwarna merah, pengendara harus:',
+      options: ['Memperlambat kendaraan lalu melaju jika jalan tampak kosong', 'Berhenti sebelum garis henti dan menunggu lampu mengizinkan jalan', 'Membunyikan klakson agar kendaraan lain berhenti', 'Mengikuti kendaraan di depan'],
+      correct: 1,
+      explanation: 'Lampu merah berarti kendaraan harus berhenti sebelum garis henti. Tunggu sampai sinyal lalu lintas mengizinkan perjalanan dilanjutkan.'
+    },
+    {
+      id: 31,
+      question: 'Apa sikap yang tepat saat lampu lalu lintas berubah menjadi kuning?',
+      options: ['Menambah kecepatan untuk segera melewati persimpangan', 'Bersiap berhenti dengan aman jika belum melewati garis henti', 'Berhenti mendadak di mana pun posisi kendaraan', 'Menganggap lampu kuning sama dengan lampu hijau'],
+      correct: 1,
+      explanation: 'Lampu kuning memperingatkan bahwa sinyal akan berubah. Bersiaplah untuk berhenti dengan aman; jangan menambah kecepatan untuk menerobos persimpangan.'
+    },
+    {
+      id: 32,
+      question: 'Apa yang harus dilakukan pengendara ketika pejalan kaki sedang menyeberang di zebra cross?',
+      options: ['Membunyikan klakson agar pejalan kaki mempercepat langkah', 'Mendahulukan pejalan kaki dan berhenti bila diperlukan', 'Melewati pejalan kaki dari sisi mana pun', 'Menambah kecepatan sebelum pejalan kaki sampai'],
+      correct: 1,
+      explanation: 'Pengendara harus mengutamakan keselamatan pejalan kaki yang menyeberang. Kurangi kecepatan dan berhenti untuk memberi kesempatan menyeberang.'
+    },
+    {
+      id: 33,
+      question: 'Ketika ambulans menyalakan sirene dan meminta prioritas, pengendara lain sebaiknya:',
+      options: ['Tetap mempertahankan posisi dan kecepatannya', 'Memberi jalan dengan tetap memperhatikan keselamatan dan kondisi sekitar', 'Mengikuti ambulans agar lebih cepat sampai', 'Berhenti mendadak di tengah persimpangan'],
+      correct: 1,
+      explanation: 'Ambulans yang sedang menjalankan tugas dengan isyarat prioritas harus diberi jalan. Beri ruang dengan aman dan jangan membuat manuver mendadak yang membahayakan.'
+    },
+    {
+      id: 34,
+      question: 'Bagaimana cara sederhana menjaga jarak aman dengan kendaraan di depan?',
+      options: ['Menempel dekat agar kendaraan lain tidak masuk', 'Menjaga jarak yang cukup untuk bereaksi dan berhenti dengan aman', 'Mengikuti tepat di belakang kendaraan besar', 'Menjaga jarak hanya saat malam hari'],
+      correct: 1,
+      explanation: 'Jaga jarak yang cukup agar tersedia waktu untuk bereaksi dan mengerem ketika kendaraan di depan melambat atau berhenti. Tambah jarak saat hujan atau jalan licin.'
+    },
+    {
+      id: 35,
+      question: 'Siapa yang wajib menggunakan sabuk keselamatan pada mobil yang dilengkapi sabuk keselamatan?',
+      options: ['Hanya pengemudi', 'Pengemudi dan penumpang yang duduk di samping pengemudi', 'Hanya penumpang di kursi belakang', 'Tidak ada yang wajib jika perjalanan dekat'],
+      correct: 1,
+      explanation: 'Pengemudi dan penumpang yang duduk di samping pengemudi wajib mengenakan sabuk keselamatan. Gunakan sabuk dengan benar setiap kali berkendara.'
     }
   ];
+
+  /** Ilustrasi untuk 25 soal pertama yang membahas rambu. */
+  const QUIZ_1_SIGN_ILLUSTRATIONS = [
+    { image: 'assets/images/quiz-no-entry.jpg', label: 'Dilarang Masuk' },
+    { image: 'assets/images/quiz-no-parking.jpg', label: 'Dilarang Parkir' },
+    { image: 'assets/images/quiz-no-stopping.jpg', label: 'Dilarang Berhenti' },
+    { image: 'assets/images/quiz-speed-limit-40.jpg', label: 'Batas Kecepatan Maksimum 40 km/jam' },
+    { image: 'assets/images/quiz-no-left-turn.png', label: 'Dilarang Belok Kiri' },
+    { image: 'assets/images/quiz-no-right-turn.png', label: 'Dilarang Belok Kanan' },
+    { image: 'assets/images/quiz-no-u-turn.png', label: 'Dilarang Putar Balik' },
+    { image: 'assets/images/quiz-no-overtaking.png', label: 'Dilarang Mendahului' },
+    { image: 'assets/images/quiz-slippery-road.jpg', label: 'Jalan Licin' },
+    { image: 'assets/images/quiz-uneven-road.jpg', label: 'Jalan Bergelombang' },
+    { image: 'assets/images/quiz-children-crossing.png', label: 'Banyak Anak-Anak' },
+    { image: 'assets/images/quiz-intersection.jpg', label: 'Persimpangan Jalan' },
+    { image: 'assets/images/quiz-stop.png', label: 'Rambu Berhenti (STOP)' },
+    { image: 'assets/images/quiz-roundabout-mandatory.png', label: 'Wajib Ikuti Bundaran' },
+    { image: 'assets/images/quiz-parking.png', label: 'Tempat Parkir' },
+    { image: 'assets/images/quiz-road-narrows.jpg', label: 'Jalan Menyempit' },
+    { image: 'assets/images/quiz-steep-ascent.jpg', label: 'Jalan Menanjak' },
+    { image: 'assets/images/quiz-steep-descent.jpg', label: 'Jalan Menurun' },
+    { image: 'assets/images/quiz-bridge.jpg', label: 'Jembatan' },
+    { image: 'assets/images/quiz-railway-gate.jpg', label: 'Perlintasan Kereta Api dengan Palang Pintu' },
+    { image: 'assets/images/quiz-railway-no-gate.png', label: 'Perlintasan Kereta Api tanpa Palang Pintu' },
+    { image: 'assets/images/quiz-no-horn.jpg', label: 'Dilarang Membunyikan Klakson' },
+    { image: 'assets/images/quiz-bicycle-lane.png', label: 'Jalur Khusus Sepeda' },
+    { image: 'assets/images/quiz-pedestrian-crossing.png', label: 'Tempat Penyeberangan Pejalan Kaki' },
+    { image: 'assets/images/quiz-winding-road.png', label: 'Jalan Berliku di Depan' },
+  ];
+
+  function createSignGlyph(symbol, color) {
+    const stroke = `stroke="${color}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"`;
+    switch (symbol) {
+      case 'car':
+      case 'overtaking':
+        return `<g fill="none" stroke="${color}" stroke-width="4" stroke-linejoin="round"><path d="M27 59h9l6-10h26l8 10h7v17H27z"/><circle cx="41" cy="78" r="5" fill="${color}"/><circle cx="70" cy="78" r="5" fill="${color}"/>${symbol === 'overtaking' ? '<path d="M13 48h15m-5-6 6 6-6 6" stroke="' + color + '" stroke-width="4" fill="none"/>' : ''}</g>`;
+      case 'arrow-up':
+        return `<path d="M60 78V37m-17 17 17-17 17 17" ${stroke}/>`;
+      case 'arrow-left':
+        return `<path d="M79 60H39m17-17L39 60l17 17" ${stroke}/>`;
+      case 'arrow-right':
+        return `<path d="M41 60h40M64 43l17 17-17 17" ${stroke}/>`;
+      case 'u-turn':
+        return `<path d="M42 78V51a18 18 0 0 1 36 0v9M65 48l13 13 13-13" ${stroke}/>`;
+      case 'P':
+      case 'S':
+      case 'H':
+        return `<text x="60" y="76" text-anchor="middle" font-family="Arial,sans-serif" font-size="53" font-weight="800" fill="${color}">${symbol}</text>`;
+      case '40':
+        return `<text x="60" y="71" text-anchor="middle" font-family="Arial,sans-serif" font-size="35" font-weight="800" fill="${color}">40</text>`;
+      case '2.5m':
+      case '8t':
+        return `<text x="60" y="69" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="800" fill="${color}">${symbol}</text>`;
+      case 'stop':
+        return `<text x="60" y="67" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="800" fill="#fff">STOP</text>`;
+      case 'yield':
+        return `<text x="60" y="62" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="800" fill="${color}">BERI</text><text x="60" y="73" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="800" fill="${color}">JALAN</text>`;
+      case 'band':
+        return '<rect x="24" y="49" width="72" height="18" rx="2" fill="#fff"/>';
+      case 'exclamation':
+        return `<path d="M60 38v28" ${stroke}/><circle cx="60" cy="78" r="3.5" fill="${color}"/>`;
+      case 'curve-right':
+        return `<path d="M45 80V62c0-18 13-28 29-28h8m-14-12 14 12-14 12" ${stroke}/>`;
+      case 'curve-left':
+        return `<path d="M75 80V62c0-18-13-28-29-28h-8m14-12L38 34l14 12" ${stroke}/>`;
+      case 'winding':
+        return `<path d="M43 82V69c0-10 19-10 19-20s-19-10-19-20m34 53V69c0-10-19-10-19-20s19-10 19-20" ${stroke}/>`;
+      case 'descent':
+        return `<path d="M34 40h22l30 25H34z" fill="${color}"/><path d="M42 57h20l7 8H42z" fill="#fff"/><circle cx="48" cy="70" r="4" fill="${color}"/><circle cx="66" cy="70" r="4" fill="${color}"/>`;
+      case 'slippery':
+        return `<path d="M31 68h9l6-9h25l8 9h8v12H31z" fill="${color}"/><circle cx="46" cy="82" r="4" fill="${color}"/><circle cx="70" cy="82" r="4" fill="${color}"/><path d="m38 43 10-5m5 10 10-5m5 10 10-5" ${stroke}/>`;
+      case 'narrowing':
+        return `<path d="M34 32v53m52-53v53M34 32l20 24m32-24L66 56" ${stroke}/>`;
+      case 'intersection':
+        return `<path d="M60 30v60M30 60h60" ${stroke}/>`;
+      case 'traffic-light':
+        return `<rect x="44" y="28" width="32" height="59" rx="8" fill="${color}"/><circle cx="60" cy="41" r="6" fill="#DC2626"/><circle cx="60" cy="57" r="6" fill="#FACC15"/><circle cx="60" cy="73" r="6" fill="#16A34A"/>`;
+      case 'pedestrian':
+      case 'school':
+        return `<g ${stroke}><circle cx="60" cy="38" r="6" fill="${color}" stroke="none"/><path d="M60 47v20m0-13-12 10m12-10 12 8m-12 5-10 16m10-16 11 16"/>${symbol === 'school' ? '<circle cx="39" cy="48" r="4" fill="' + color + '"/><path d="M39 54v17m0-10-8 8m8-8 8 7m-8 3-7 11m7-11 7 11" stroke="' + color + '" stroke-width="4" stroke-linecap="round" fill="none"/>' : ''}</g>`;
+      case 'railway':
+        return `<rect x="39" y="30" width="42" height="48" rx="7" fill="${color}"/><path d="M45 40h12v12H45zm19 0h12v12H64zM49 79l-9 10m31-10 9 10M35 88h50" stroke="${color}" stroke-width="4" fill="none"/>`;
+      case 'roadwork':
+        return `<path d="m42 80 24-38m-18 38 34 0" ${stroke}/><circle cx="68" cy="34" r="6" fill="${color}"/><path d="m68 42-9 19 15 5m-15-5-10 15m23-10 9 15" ${stroke}/>`;
+      default:
+        return '';
+    }
+  }
+
+  function createTrafficSignSvg(sign) {
+    let plate;
+    let glyphColor = '#17212b';
+    switch (sign.kind) {
+      case 'warning':
+        plate = '<path d="M60 8 111 98H9z" fill="#FDE047" stroke="#DC2626" stroke-width="7" stroke-linejoin="round"/>';
+        break;
+      case 'mandatory':
+        plate = '<circle cx="60" cy="53" r="46" fill="#0876C9"/>';
+        glyphColor = '#fff';
+        break;
+      case 'information':
+        plate = '<rect x="13" y="8" width="94" height="91" rx="5" fill="#0876C9"/>';
+        glyphColor = '#fff';
+        break;
+      case 'stop':
+        plate = '<polygon points="38,8 82,8 105,31 105,75 82,98 38,98 15,75 15,31" fill="#DC2626" stroke="#fff" stroke-width="4"/>';
+        break;
+      case 'yield':
+        plate = '<path d="M10 12h100L60 98z" fill="#fff" stroke="#DC2626" stroke-width="7" stroke-linejoin="round"/>';
+        glyphColor = '#DC2626';
+        break;
+      case 'no-entry':
+        plate = '<circle cx="60" cy="53" r="46" fill="#DC2626"/>';
+        break;
+      case 'no-parking':
+      case 'no-stopping':
+        plate = '<circle cx="60" cy="53" r="44" fill="#0876C9" stroke="#DC2626" stroke-width="7"/>';
+        glyphColor = '#fff';
+        break;
+      default:
+        plate = '<circle cx="60" cy="53" r="44" fill="#fff" stroke="#DC2626" stroke-width="7"/>';
+    }
+
+    const slash = sign.slash
+      ? '<path d="m29 84 62-62" stroke="#DC2626" stroke-width="8" stroke-linecap="round"/>'
+      : '';
+    const cross = sign.cross
+      ? '<path d="m34 27 52 52m0-52L34 79" stroke="#DC2626" stroke-width="8" stroke-linecap="round"/>'
+      : '';
+    const glyph = createSignGlyph(sign.symbol, glyphColor);
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" aria-hidden="true"><path d="M60 99v35" stroke="#64748B" stroke-width="7"/><path d="M46 135h28" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/>${plate}${glyph}${slash}${cross}</svg>`;
+  }
 
   /** KUIS 2: Studi Kasus Uji Teori SIM */
   const QUIZ_2_QUESTIONS = [
@@ -353,6 +558,7 @@
     currentIndex: 0,
     answers: [],               // Array of { selectedIndex, correct }
     timerInterval: null,
+    advanceInterval: null,
     timeLeft: 30,
     isAnswered: false
   };
@@ -375,9 +581,11 @@
   }
 
   function startQuiz(quizId) {
+    stopTimer();
+    stopAutoAdvance();
     quizState.currentQuizId = quizId;
     quizState.questions = quizId === '1'
-      ? shuffleArray([...QUIZ_1_QUESTIONS]).slice(0, 15) // 15 random from 25
+      ? [...QUIZ_1_QUESTIONS]
       : shuffleArray([...QUIZ_2_QUESTIONS]).slice(0, 15); // 15 random from 20
     quizState.currentIndex = 0;
     quizState.answers = [];
@@ -399,6 +607,7 @@
    * 4. RENDER SOAL
    * -------------------------------------------------------------------------- */
   function renderQuestion() {
+    stopAutoAdvance();
     const q = quizState.questions[quizState.currentIndex];
     const qId = quizState.currentQuizId;
     const total = quizState.questions.length;
@@ -413,8 +622,42 @@
     // Question number & text
     const qNumEl = document.getElementById(`quiz-${qId}-question-num`);
     const qTextEl = document.getElementById(`quiz-${qId}-question-text`);
-    if (qNumEl) qNumEl.textContent = `Soal ${current}`;
+    if (qNumEl) {
+      const category = qId === '1'
+        ? current <= QUIZ_1_SIGN_ILLUSTRATIONS.length ? 'Rambu Lalu Lintas' : 'Peraturan dan Dasar Berkendara'
+        : '';
+      qNumEl.textContent = category ? `Soal ${current} · ${category}` : `Soal ${current}`;
+    }
     if (qTextEl) qTextEl.textContent = q.question;
+
+    if (qId === '1') {
+      const signImage = document.getElementById('quiz-1-sign');
+      const sign = QUIZ_1_SIGN_ILLUSTRATIONS[q.id - 1];
+    if (signImage) {
+      signImage.classList.toggle('hidden', !sign);
+      if (sign) {
+        signImage.innerHTML = '';
+        if (sign.image) {
+          const image = document.createElement('img');
+          image.src = sign.image;
+          image.alt = sign.label;
+          image.draggable = false;
+          signImage.appendChild(image);
+        } else {
+          signImage.innerHTML = createTrafficSignSvg(sign);
+        }
+        signImage.setAttribute('aria-label', sign.label);
+        signImage.setAttribute('title', sign.label);
+        const caption = document.createElement('span');
+        caption.className = 'quiz-sign-caption';
+        caption.textContent = sign.label;
+        signImage.appendChild(caption);
+      } else {
+        signImage.innerHTML = '';
+        signImage.removeAttribute('title');
+      }
+    }
+    }
 
     // Options
     const optionsContainer = document.getElementById(`quiz-${qId}-options`);
@@ -491,6 +734,40 @@
     }
   }
 
+  function stopAutoAdvance() {
+    if (quizState.advanceInterval) {
+      clearInterval(quizState.advanceInterval);
+      quizState.advanceInterval = null;
+    }
+  }
+
+  function startAutoAdvance(seconds, quizId) {
+    stopAutoAdvance();
+    let remaining = seconds;
+    const countdown = document.getElementById(`quiz-${quizId}-advance-countdown`);
+
+    quizState.advanceInterval = setInterval(() => {
+      remaining--;
+      if (countdown) countdown.textContent = remaining.toString();
+      if (remaining <= 0) {
+        stopAutoAdvance();
+        handleNext();
+      }
+    }, 1000);
+  }
+
+  function stopQuiz() {
+    stopTimer();
+    stopAutoAdvance();
+    if (!quizState.currentQuizId) return;
+
+    const quizId = quizState.currentQuizId;
+    document.getElementById(`quiz-${quizId}-intro`)?.classList.remove('hidden');
+    document.getElementById(`quiz-${quizId}-session`)?.classList.add('hidden');
+    document.getElementById(`quiz-${quizId}-result`)?.classList.add('hidden');
+    quizState.currentQuizId = null;
+  }
+
   /* --------------------------------------------------------------------------
    * 6. HANDLE JAWABAN
    * -------------------------------------------------------------------------- */
@@ -524,23 +801,20 @@
     const feedbackEl = document.getElementById(`quiz-${qId}-feedback`);
     if (feedbackEl) {
       feedbackEl.classList.remove('hidden', 'feedback-correct', 'feedback-wrong', 'feedback-timeout');
+      const countdownSeconds = isCorrect ? 3 : 5;
+      const countdownMarkup = `<div class="quiz-auto-advance"><span>Lanjut dalam</span><strong id="quiz-${qId}-advance-countdown" aria-live="polite" aria-atomic="true">${countdownSeconds}</strong><span>detik</span><button type="button" class="btn btn-primary quiz-auto-next-btn">Soal Berikutnya →</button></div>`;
       if (selectedIndex === -1) {
         feedbackEl.classList.add('feedback-timeout');
-        feedbackEl.innerHTML = `<span class="feedback-icon">⏰</span><div><strong>Waktu Habis!</strong><p>${q.explanation}</p></div>`;
+        feedbackEl.innerHTML = `<span class="feedback-icon">⏰</span><div class="quiz-feedback-content"><strong>Waktu Habis!</strong><p>${q.explanation}</p>${countdownMarkup}</div>`;
       } else if (isCorrect) {
         feedbackEl.classList.add('feedback-correct');
-        feedbackEl.innerHTML = `<span class="feedback-icon">✓</span><div><strong>Benar!</strong><p>${q.explanation}</p></div>`;
+        feedbackEl.innerHTML = `<span class="feedback-icon">✓</span><div class="quiz-feedback-content"><strong>Benar!</strong><p>${q.explanation}</p>${countdownMarkup}</div>`;
       } else {
         feedbackEl.classList.add('feedback-wrong');
-        feedbackEl.innerHTML = `<span class="feedback-icon">✗</span><div><strong>Kurang Tepat.</strong><p>${q.explanation}</p></div>`;
+        feedbackEl.innerHTML = `<span class="feedback-icon">✗</span><div class="quiz-feedback-content"><strong>Kurang Tepat.</strong><p>${q.explanation}</p>${countdownMarkup}</div>`;
       }
-    }
-
-    // Show next button
-    const nextBtn = document.getElementById(`quiz-${qId}-next-btn`);
-    if (nextBtn) {
-      nextBtn.classList.remove('hidden');
-      nextBtn.onclick = handleNext;
+      feedbackEl.querySelector('.quiz-auto-next-btn')?.addEventListener('click', handleNext);
+      startAutoAdvance(countdownSeconds, qId);
     }
   }
 
@@ -548,6 +822,7 @@
    * 7. NAVIGASI SOAL
    * -------------------------------------------------------------------------- */
   function handleNext() {
+    stopAutoAdvance();
     quizState.currentIndex++;
     if (quizState.currentIndex < quizState.questions.length) {
       renderQuestion();
@@ -560,6 +835,8 @@
    * 8. TAMPILKAN HASIL
    * -------------------------------------------------------------------------- */
   function showResults() {
+    stopTimer();
+    stopAutoAdvance();
     const qId = quizState.currentQuizId;
     const total = quizState.questions.length;
     const correct = quizState.answers.filter(a => a.isCorrect).length;
@@ -625,18 +902,7 @@
     // Retry button
     const retryBtn = document.getElementById(`quiz-${qId}-retry-btn`);
     if (retryBtn) {
-      retryBtn.onclick = () => startQuiz(qId);
-    }
-
-    // Back to intro button
-    const backBtn = document.getElementById(`quiz-${qId}-back-btn`);
-    if (backBtn) {
-      backBtn.onclick = () => {
-        const introSection = document.getElementById(`quiz-${qId}-intro`);
-        const resultSec = document.getElementById(`quiz-${qId}-result`);
-        if (introSection) introSection.classList.remove('hidden');
-        if (resultSec) resultSec.classList.add('hidden');
-      };
+      retryBtn.onclick = stopQuiz;
     }
   }
 
@@ -656,7 +922,8 @@
    * -------------------------------------------------------------------------- */
   window.ELintasQuiz = {
     init: initQuiz,
-    start: startQuiz
+    start: startQuiz,
+    stop: stopQuiz
   };
 
   if (document.readyState === 'loading') {

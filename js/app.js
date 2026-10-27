@@ -47,6 +47,10 @@
     const previousView = currentView;
     currentView = targetView;
 
+    if (previousView === 'quiz-1' && targetView !== 'quiz-1') {
+      window.ELintasQuiz?.stop();
+    }
+
     // 1. Matikan atau hidupkan siklus hidup simulasi canvas jika berpindah
     if (window.ELintasSimulation) {
       if (previousView === 'simulation' && targetView !== 'simulation') {
