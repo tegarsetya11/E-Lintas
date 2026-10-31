@@ -2402,6 +2402,15 @@ kbd {
   flex-shrink: 0;
 }
 
+#quiz-2-intro .quiz-case-badge-box {
+  width: 60px;
+  height: 60px;
+}
+
+#quiz-2-intro .quiz-case-badge-box .quiz-case-badge {
+  border-radius: 0;
+}
+
 .quiz-intro-icon-box svg {
   width: 30px;
   height: 30px;
@@ -2632,6 +2641,13 @@ kbd {
   width: 112px;
   height: 132px;
   object-fit: contain;
+}
+
+.quiz-case-image img {
+  width: min(100%, 760px);
+  height: auto;
+  max-height: 420px;
+  border-radius: var(--radius-md);
 }
 
 .quiz-sign-caption {
@@ -2980,6 +2996,11 @@ kbd {
   border: 1px solid #FECACA;
 }
 
+.review-unanswered {
+  background-color: #F1F5F9;
+  border: 1px solid #CBD5E1;
+}
+
 .review-q-header {
   display: flex;
   align-items: center;
@@ -3001,6 +3022,7 @@ kbd {
 
 .badge-correct { background-color: #16A34A; color: white; }
 .badge-wrong { background-color: #DC2626; color: white; }
+.badge-unanswered { background-color: #64748B; color: white; }
 
 .review-question {
   color: var(--color-navy);
@@ -3018,6 +3040,10 @@ kbd {
 .review-answer {
   color: #16A34A;
   font-size: 0.85rem;
+}
+
+.review-answer-unanswered {
+  color: #64748B;
 }
 
 .result-actions {

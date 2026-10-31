@@ -25,13 +25,10 @@
     setupSimulationGuidelines();
     setupHashRouting();
 
-    // Baca hash URL awal jika ada (misal: #simulation)
-    const initialHash = window.location.hash.replace('#', '');
-    if (VALID_VIEWS.includes(initialHash)) {
-      switchView(initialHash, false);
-    } else {
-      switchView('home', false);
+    if (window.location.hash) {
+      history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
     }
+    switchView('home', false);
   }
 
   /**
@@ -47,7 +44,7 @@
     const previousView = currentView;
     currentView = targetView;
 
-    if (previousView === 'quiz-1' && targetView !== 'quiz-1') {
+    if (previousView.startsWith('quiz-') && targetView !== previousView) {
       window.ELintasQuiz?.stop();
     }
 

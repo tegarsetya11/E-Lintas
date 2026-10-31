@@ -68,7 +68,12 @@ npx serve .
 2. Jawab seluruh **35 soal** secara berurutan: **25 soal rambu lalu lintas** dengan ilustrasi, dilanjutkan **10 soal peraturan dan dasar berkendara**. Setiap soal memiliki empat pilihan dan waktu 30 detik.
 3. Setelah menjawab, baca penjelasan dan tunggu soal berikutnya tampil otomatis: 3 detik untuk jawaban benar atau 5 detik untuk jawaban salah maupun waktu habis. Hasil akhir menampilkan nilai dan tinjauan jawaban.
 
-### B. Simulasi Berkendara
+### B. Kuis Studi Kasus Uji Teori SIM
+1. Dari Beranda, pilih **"Kuis Studi Kasus Uji Teori SIM"**.
+2. Jawab studi kasus pilihan ganda berdasarkan situasi lalu lintas yang ditampilkan. Setiap soal memiliki waktu 30 detik dan dilengkapi penjelasan setelah dijawab.
+3. Kuis dimulai dengan soal yang telah disediakan. Soal berikutnya akan ditambahkan dari materi yang dikirimkan pengguna.
+
+### C. Simulasi Berkendara
 Masuk ke menu **"Simulasi Berkendara Jalur Uji SIM C"** pada Beranda atau melalui bilah navigasi atas.
 
 ### Kontrol Keyboard (Desktop / Laptop)
@@ -143,9 +148,7 @@ const CONFIG = {
 
 ## 7. Rencana Pengembangan Selanjutnya (Roadmap)
 
-1. **Kuis 2: Studi Kasus Uji Teori SIM**
-   * Pembelajaran skenario visual (persimpangan 4 arah tanpa lampu, marka serong, prioritas ambulans/pemadam).
-2. **Simulasi SIM C Lanjutan (Deteksi Jalur & Sensor Kaki)**
+1. **Simulasi SIM C Lanjutan (Deteksi Jalur & Sensor Kaki)**
    * Menambahkan sensor *collision detection* garis batas putih/kuning.
    * Indikator peringatan jika ban motor menginjak garis marka atau keluar dari lintasan.
    * Fitur lampu sein (kiri/kanan) sebelum memasuki tikungan Y.

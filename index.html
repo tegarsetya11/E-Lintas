@@ -254,43 +254,73 @@
     </section>
 
     <!-- ------------------------------------------------------------------
-         VIEW 3: HALAMAN KUIS 2 - DALAM MASA PENGEMBANGAN
+         VIEW 3: KUIS STUDI KASUS UJI TEORI SIM
          ------------------------------------------------------------------ -->
     <section id="view-quiz-2" class="app-view" aria-labelledby="quiz2-heading">
-      <div class="content-wrapper page-card-wrapper">
-        <div class="card page-card">
-
-          <div class="dev-badge-row">
-            <span class="dev-quiz-label">Kuis 2</span>
-            <span class="dev-status-pill">🔧 Dalam Masa Pengembangan</span>
-          </div>
-
-          <h1 id="quiz2-heading" class="page-title">Kuis Studi Kasus Uji Teori SIM</h1>
-
-          <div class="development-box">
-            <div class="dev-icon-circle">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
+      <div class="content-wrapper quiz-wrapper">
+        <div id="quiz-2-intro" class="quiz-intro-card">
+          <div class="quiz-intro-header">
+            <div class="quiz-intro-icon-box quiz-case-badge-box">
+              <img src="assets/images/quiz-case-study-badge.png" alt="" class="menu-icon-illustration quiz-case-badge">
             </div>
-            <h2 class="dev-title">Masih dalam masa pengembangan</h2>
-            <p class="dev-desc">
-              Fitur kuis studi kasus ini sedang dalam tahap perancangan. Skenario persimpangan, prioritas kendaraan, marka jalan, dan APILL akan segera tersedia.
-            </p>
+            <div>
+              <span class="quiz-category-badge">Kuis 2</span>
+              <h1 id="quiz2-heading" class="quiz-intro-title">Kuis Studi Kasus Uji Teori SIM</h1>
+            </div>
           </div>
-
-          <div class="page-action-row">
-            <button type="button" class="btn btn-primary btn-back-home" data-target="home">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-              <span>Kembali ke Beranda</span>
-            </button>
+          <p class="quiz-intro-desc">Latih kemampuan mengambil keputusan aman melalui studi kasus berkendara.</p>
+          <div class="quiz-intro-stats">
+            <div class="quiz-stat-item"><strong><span id="quiz-2-question-count">15</span> soal</strong><span>pilihan ganda</span></div>
+            <div class="quiz-stat-item"><strong>4 pilihan</strong><span>setiap soal</span></div>
+            <div class="quiz-stat-item"><strong>30 detik</strong><span>per soal</span></div>
           </div>
+          <div class="quiz-intro-actions">
+            <button type="button" class="btn btn-quiz-start" id="quiz-2-start-btn">Mulai Kuis</button>
+            <button type="button" class="btn btn-secondary btn-back-home" data-target="home">Kembali ke Beranda</button>
+          </div>
+        </div>
 
+        <div id="quiz-2-session" class="quiz-session hidden" aria-live="polite">
+          <div class="quiz-progress-bar-wrapper">
+            <div class="quiz-progress-info">
+              <span class="quiz-progress-text" id="quiz-2-progress-text">Soal 1 dari 1</span>
+              <div class="quiz-timer-circle-wrapper" aria-label="Sisa waktu">
+                <svg class="quiz-timer-svg" viewBox="0 0 44 44" aria-hidden="true">
+                  <circle cx="22" cy="22" r="18" fill="none" stroke="#E2E8F0" stroke-width="4"></circle>
+                  <circle id="quiz-2-timer-circle" cx="22" cy="22" r="18" fill="none" stroke="#007de2" stroke-width="4" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                </svg>
+                <span class="quiz-timer-text" id="quiz-2-timer">30</span>
+              </div>
+            </div>
+            <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-2-progress-bar"></div></div>
+          </div>
+          <div class="quiz-question-card">
+            <div class="quiz-sign-illustration quiz-case-image hidden" id="quiz-2-case-image"></div>
+            <span class="quiz-q-num" id="quiz-2-question-num">Soal 1</span>
+            <h2 class="quiz-q-text" id="quiz-2-question-text"></h2>
+            <div class="quiz-options" id="quiz-2-options"></div>
+            <div class="quiz-feedback hidden" id="quiz-2-feedback" role="status"></div>
+          </div>
+        </div>
+
+        <div id="quiz-2-result" class="quiz-result-card hidden">
+          <div class="result-header result-header-a" id="quiz-2-result-header">
+            <div class="result-grade-circle" id="quiz-2-result-grade">A</div>
+            <div class="result-score-info">
+              <div class="result-score-value"><span id="quiz-2-result-score">0</span><span class="result-score-unit">/ 100</span></div>
+              <p class="result-grade-text" id="quiz-2-result-grade-text"></p>
+            </div>
+          </div>
+          <div class="result-stats-row">
+            <div class="result-stat"><span class="result-stat-val" id="quiz-2-result-correct">0</span><span class="result-stat-label">Jawaban Benar</span></div>
+            <div class="result-stat result-stat-wrong"><span class="result-stat-val" id="quiz-2-result-total">1</span><span class="result-stat-label">Total Soal</span></div>
+          </div>
+          <h2 class="result-review-title">Tinjauan Jawaban</h2>
+          <div class="result-review-list" id="quiz-2-review"></div>
+          <div class="result-actions">
+            <button type="button" class="btn btn-quiz-start" id="quiz-2-retry-btn">Ulangi Kuis</button>
+            <button type="button" class="btn btn-outline btn-back-home" data-target="home">Beranda</button>
+          </div>
         </div>
       </div>
     </section>

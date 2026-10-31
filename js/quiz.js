@@ -4,7 +4,7 @@
  * ==============================================================================
  * Sistem Kuis Interaktif E-Lintas
  * - Kuis 1: Peraturan dan Rambu-Rambu Lalu Lintas (35 Soal)
- * - Kuis 2: Studi Kasus Uji Teori SIM (Persimpangan, Prioritas, Marka, APILL) (20 Soal)
+ * - Kuis 2: Studi Kasus Uji Teori SIM
  *
  * Fitur:
  * - Timer countdown per soal (30 detik)
@@ -409,146 +409,215 @@
   const QUIZ_2_QUESTIONS = [
     {
       id: 1,
-      question: 'STUDI KASUS - PERSIMPANGAN: Anda akan masuk ke persimpangan tanpa lampu lalu lintas dan tanpa rambu prioritas. Ada kendaraan dari sebelah kanan Anda. Apa yang harus Anda lakukan?',
-      options: ['Mempercepat laju agar lebih dahulu melewati persimpangan', 'Mendahulukan kendaraan dari sebelah kanan karena memiliki hak prioritas', 'Membunyikan klakson dan terus melaju', 'Berhenti, lalu melanjutkan kapan saja'],
-      correct: 1,
-      explanation: 'Aturan "prioritas kanan" berlaku di persimpangan tanpa rambu prioritas: kendaraan dari sebelah kanan Anda memiliki hak untuk lebih dahulu melewati persimpangan. Anda wajib memberikan prioritas kepada mereka.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di wilayah perkotaan. Di sebelah kiri terdapat sebuah mobil yang sedang parkir. Namun, lampu belakang mobil tersebut masih menyala dan terlihat pengemudinya masih berada di dalam mobil. Kondisi tersebut berpotensi menimbulkan bahaya apabila mobil tiba-tiba bergerak atau keluar dari tempat parkir. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mengantisipasi terjadinya kecelakaan?',
+      options: [
+        'Tetap mempertahankan kecepatan 50 km/jam agar perjalanan lebih cepat.',
+        'Membunyikan klakson dan langsung mendahului mobil dari sebelah kiri.',
+        'Mengurangi kecepatan untuk mengantisipasi kemungkinan mobil bergerak atau keluar dari tempat parkir.',
+        'Menambah kecepatan agar segera melewati mobil yang sedang parkir.'
+      ],
+      correct: 2,
+      image: 'assets/images/quiz-case-parked-car.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor yang mendekati mobil parkir dengan lampu belakang menyala di sisi kiri jalan.',
+      explanation: 'Kurangi kecepatan dan bersiap mengantisipasi pergerakan mobil. Lampu belakang yang menyala dan pengemudi yang masih berada di dalam mobil dapat menjadi tanda bahwa mobil mungkin akan bergerak atau keluar dari tempat parkir.'
     },
     {
       id: 2,
-      question: 'STUDI KASUS - APILL: Lampu lalu lintas berwarna merah menyala, tetapi ada tulisan "BELOK KIRI LANGSUNG" di bawah lampu. Apa yang boleh Anda lakukan?',
-      options: ['Tetap berhenti, tulisan itu tidak berlaku', 'Boleh belok kiri tanpa harus berhenti di lampu merah, namun tetap mendahulukan pejalan kaki dan kendaraan dari arah lain', 'Belok kiri hanya jika lampu kuning', 'Dilarang belok kiri saat merah apapun kondisinya'],
-      correct: 1,
-      explanation: 'Tanda "BELOK KIRI LANGSUNG" (LTOR - Left Turn On Red) berarti kendaraan boleh berbelok ke kiri meskipun lampu merah, TANPA perlu berhenti. Namun pengemudi tetap wajib mendahulukan pejalan kaki yang menyeberang dan kendaraan dari arah lain yang mendapat lampu hijau.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di wilayah permukiman. Di bahu jalan terdapat anak-anak yang sedang bermain bola. Kondisi tersebut berpotensi membahayakan keselamatan karena bola atau anak-anak dapat tiba-tiba bergerak ke arah jalan raya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mencegah terjadinya kecelakaan?',
+      options: [
+        'Menambah kecepatan agar segera melewati anak-anak yang sedang bermain.',
+        'Membunyikan klakson dan tetap mempertahankan kecepatan kendaraan.',
+        'Mengurangi jarak aman dengan anak-anak agar tidak menghambat perjalanan.',
+        'Melakukan pengereman untuk mengurangi kecepatan dan mencegah terjadinya kecelakaan.'
+      ],
+      correct: 3,
+      image: 'assets/images/quiz-case-playing-children.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor yang mendekati anak-anak bermain bola di tepi jalan permukiman.',
+      explanation: 'Lakukan pengereman untuk mengurangi kecepatan dan tetap waspada terhadap gerakan anak-anak atau bola yang dapat tiba-tiba memasuki jalan. Dengan kecepatan lebih rendah, pengendara memiliki lebih banyak waktu untuk bereaksi dan mencegah kecelakaan.'
     },
     {
       id: 3,
-      question: 'STUDI KASUS - MARKA JALAN: Anda sedang berkendara di jalan dua arah. Di tengah jalan terdapat garis kuning utuh (tidak terputus). Bolehkah Anda menyalip kendaraan di depan?',
-      options: ['Boleh, jika jalan di depan kosong sejauh 200 meter', 'Tidak boleh dalam kondisi apapun karena garis kuning utuh melarang menyalip', 'Boleh jika kecepatan lebih dari 60 km/jam', 'Boleh jika darurat'],
-      correct: 1,
-      explanation: 'Garis kuning utuh (tidak terputus) di tengah jalan menandakan larangan mutlak untuk menyalip atau berpindah jalur ke arah berlawanan. Ini biasanya dipasang di tikungan, tanjakan, atau area berbahaya lainnya.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di jalan dalam kota. Pengendara tersebut akan berbelok ke kiri ketika melewati sebuah simpang tiga. Di sekitar persimpangan terdapat kemungkinan pejalan kaki yang akan menyeberang jalan. Kondisi ini mengharuskan pengendara lebih berhati-hati agar tidak membahayakan pengguna jalan lainnya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mencegah terjadinya kecelakaan, terutama dengan pejalan kaki yang akan menyeberang jalan?',
+      options: [
+        'Menambah kecepatan agar segera melewati persimpangan.',
+        'Membunyikan klakson dan langsung berbelok ke kiri.',
+        'Mengurangi kecepatan untuk mengantisipasi pejalan kaki yang akan menyeberang jalan.',
+        'Mempertahankan kecepatan 50 km/jam saat berbelok ke kiri.'
+      ],
+      correct: 2,
+      image: 'assets/images/quiz-case-left-turn-pedestrian.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor mendekati simpang tiga dengan pejalan kaki di sekitar penyeberangan.',
+      explanation: 'Kurangi kecepatan saat mendekati simpang dan mengantisipasi pejalan kaki yang mungkin menyeberang. Kecepatan yang lebih rendah memberi waktu untuk bereaksi dan mendahulukan pejalan kaki dengan aman.'
     },
     {
       id: 4,
-      question: 'STUDI KASUS - PRIORITAS: Saat lampu hijau menyala, Anda ingin berbelok kanan di persimpangan. Di hadapan Anda ada kendaraan dari arah berlawanan yang bergerak lurus. Apa yang benar?',
-      options: ['Anda punya hak jalan karena lampu hijau', 'Berbelok kanan secepat mungkin', 'Anda harus menunggu dan mendahulukan kendaraan lurus dari arah berlawanan', 'Kendaraan dari berlawanan yang harus berhenti'],
-      correct: 2,
-      explanation: 'Kendaraan yang berbelok kanan (atau berbelok kiri melewati arus berlawanan) selalu harus mendahulukan kendaraan yang bergerak lurus dari arah berlawanan. Lampu hijau bukan berarti Anda langsung mendapat prioritas berbelok.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di kawasan pertokoan. Di depan pengendara terdapat polisi tidur dan sebuah mobil yang akan mundur. Kondisi tersebut berpotensi menimbulkan kecelakaan apabila pengendara tidak menjaga jarak dan kecepatan kendaraannya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mengantisipasi terjadinya kecelakaan dengan mobil yang akan mundur di depannya?',
+      options: [
+        'Menambah kecepatan agar segera melewati polisi tidur.',
+        'Mempertahankan kecepatan 50 km/jam dan tetap mendekati mobil di depan.',
+        'Membunyikan klakson dan langsung mendahului mobil tersebut.',
+        'Mengurangi kecepatan untuk mengantisipasi mobil yang akan mundur dan mencegah terjadinya kecelakaan.'
+      ],
+      correct: 3,
+      image: 'assets/images/quiz-case-reversing-car-speed-bump.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor di kawasan pertokoan, mendekati polisi tidur dan kendaraan di depannya.',
+      explanation: 'Kurangi kecepatan dan jaga jarak aman dari mobil yang akan mundur, terutama saat mendekati polisi tidur. Ini memberi waktu dan ruang untuk bereaksi jika mobil bergerak mundur.'
     },
     {
       id: 5,
-      question: 'STUDI KASUS - BUNDARAN: Anda memasuki bundaran (roundabout). Kendaraan mana yang harus Anda dahulukan?',
-      options: ['Kendaraan yang hendak masuk bundaran dari kanan Anda', 'Kendaraan yang sudah berada di dalam bundaran', 'Kendaraan yang paling besar', 'Tidak ada prioritas di bundaran'],
-      correct: 1,
-      explanation: 'Di bundaran (roundabout), kendaraan yang sudah berada di dalam bundaran memiliki prioritas. Anda yang baru akan masuk harus memberikan jalan kepada semua kendaraan yang sudah berputar di dalam bundaran.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 20 km/jam di jalan dalam kota. Di depan pengendara terdapat genangan air yang cukup luas dan dapat mengganggu perjalanan. Jika pengendara melaju terlalu cepat melewati genangan tersebut, percikan air dapat mengenai pengguna jalan lainnya sehingga mengganggu kenyamanan mereka. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menjaga keselamatan dan kenyamanan pengguna jalan lainnya?',
+      options: [
+        'Menambah kecepatan agar segera melewati genangan air.',
+        'Mempertahankan kecepatan 20 km/jam saat melewati genangan air.',
+        'Mengurangi kecepatan untuk mencegah percikan air yang dapat mengganggu pengguna jalan lainnya.',
+        'Membunyikan klakson dan melewati genangan air dengan cepat.'
+      ],
+      correct: 2,
+      image: 'assets/images/quiz-case-water-puddle.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor mendekati genangan air di jalan permukiman.',
+      explanation: 'Kurangi kecepatan saat melewati genangan air. Selain menjaga kendali sepeda motor, hal ini mengurangi percikan yang dapat mengenai atau mengganggu pengguna jalan lain.'
     },
     {
       id: 6,
-      question: 'STUDI KASUS - APILL: Lampu lalu lintas kuning menyala saat Anda sedang berkendara mendekati persimpangan. Kendaraan Anda masih sekitar 15 meter dari garis stop. Apa yang paling tepat?',
-      options: ['Mempercepat kendaraan agar bisa lewat sebelum merah', 'Tetap melaju dengan kecepatan sama', 'Mulai mengurangi kecepatan dan bersiap untuk berhenti sebelum garis stop', 'Menyalakan lampu hazard dan terus melaju'],
-      correct: 2,
-      explanation: 'Lampu kuning berarti bersiap berhenti. Karena masih 15 meter dari garis stop, Anda masih bisa berhenti dengan aman. Mempercepat kendaraan saat kuning adalah perilaku berbahaya dan merupakan pelanggaran.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di jalan dalam kota. Di depan pengendara terdapat kemacetan lalu lintas yang menyebabkan kendaraan bergerak sangat lambat bahkan berhenti. Kondisi tersebut mengharuskan pengendara berhati-hati agar tidak menabrak kendaraan lain di depannya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya kecelakaan akibat kemacetan lalu lintas?',
+      options: [
+        'Menambah kecepatan agar dapat melewati kemacetan dengan cepat.',
+        'Membunyikan klakson secara terus-menerus agar kendaraan di depan segera berjalan.',
+        'Tetap mempertahankan kecepatan 50 km/jam meskipun kondisi jalan macet.',
+        'Melakukan pengereman dan berhenti sampai kondisi lalu lintas memungkinkan untuk melanjutkan perjalanan.'
+      ],
+      correct: 3,
+      image: 'assets/images/quiz-case-traffic-jam.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor mendekati antrean kendaraan yang melaju lambat di jalan dalam kota.',
+      explanation: 'Lakukan pengereman secara terkendali dan berhenti dengan jarak aman jika kendaraan di depan berhenti. Lanjutkan perjalanan hanya ketika arus lalu lintas kembali memungkinkan.'
     },
     {
       id: 7,
-      question: 'STUDI KASUS - PERSIMPANGAN: Di persimpangan dengan lampu lalu lintas mati (padam). Bagaimana cara mengaturnya?',
-      options: ['Kendaraan di jalan utama selalu didahulukan', 'Semua kendaraan harus berhenti sejenak dan bergantian seperti aturan persimpangan tanpa lampu, menggunakan aturan prioritas kanan', 'Kendaraan yang bergerak lebih cepat didahulukan', 'Abaikan saja dan lanjutkan'],
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 20 km/jam di kawasan permukiman. Kondisi jalan di depan pengendara terlihat lengang dan tidak terdapat kendaraan lain yang melintas. Meskipun kondisi jalan cukup aman, pengendara tetap harus memperhatikan situasi lalu lintas di sekitarnya untuk menjaga keselamatan selama perjalanan. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor ketika kondisi jalan di kawasan permukiman sedang lengang?',
+      options: [
+        'Menambah kecepatan agar perjalanan lebih cepat sampai tujuan.',
+        'Melanjutkan perjalanan dengan kecepatan stabil serta tetap memperhatikan kondisi lalu lintas di sekitar.',
+        'Menghentikan kendaraan meskipun kondisi jalan aman dan tidak ada hambatan.',
+        'Mengurangi kecepatan secara terus-menerus hingga kendaraan hampir berhenti.'
+      ],
       correct: 1,
-      explanation: 'Saat lampu lalu lintas padam, persimpangan diperlakukan seperti persimpangan tanpa rambu. Pengemudi harus berhenti, memperhatikan kondisi, dan menggunakan aturan prioritas kanan atau bergantian dengan tertib.'
+      image: 'assets/images/quiz-case-quiet-residential-road.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor melaju di jalan permukiman yang lengang.',
+      explanation: 'Lanjutkan perjalanan dengan kecepatan stabil dan tetap waspada terhadap lingkungan sekitar. Jalan yang terlihat lengang bukan alasan untuk menambah kecepatan atau mengabaikan kemungkinan munculnya pengguna jalan lain.'
     },
     {
       id: 8,
-      question: 'STUDI KASUS - MARKA JALAN: Anda melihat marka zebra cross (garis putih sejajar) di depan Anda. Seorang pejalan kaki baru saja mulai menyeberang. Apa yang harus Anda lakukan?',
-      options: ['Membunyikan klakson agar pejalan kaki lebih cepat menyeberang', 'Tetap melaju dengan kecepatan yang sama', 'Hentikan kendaraan dan berikan prioritas kepada pejalan kaki hingga selesai menyeberang', 'Menyalip dari sisi lain untuk menghindari pejalan kaki'],
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 40 km/jam di jalan dalam kota. Kondisi lalu lintas di depan pengendara terpantau lancar dengan jarak aman antar kendaraan. Tidak terdapat hambatan yang mengganggu perjalanan. Meskipun kondisi lalu lintas lancar, pengendara tetap harus memperhatikan situasi di sekitarnya agar perjalanan tetap aman. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor ketika kondisi lalu lintas di depannya lancar dan aman?',
+      options: [
+        'Menambah kecepatan secara berlebihan agar lebih cepat sampai tujuan.',
+        'Melakukan pengereman dan berhenti meskipun kondisi lalu lintas lancar.',
+        'Melanjutkan perjalanan dengan kecepatan stabil serta tetap memperhatikan kondisi lalu lintas di sekitar.',
+        'Mengurangi kecepatan secara tiba-tiba tanpa adanya hambatan di jalan.'
+      ],
       correct: 2,
-      explanation: 'UU No. 22 Tahun 2009 mewajibkan pengemudi untuk mendahulukan pejalan kaki yang sedang menyeberang di zebra cross. Melanggar aturan ini dapat dikenai sanksi pidana dan denda.'
+      image: 'assets/images/quiz-case-clear-traffic.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor di jalan dalam kota dengan kondisi lalu lintas lancar.',
+      explanation: 'Pertahankan kecepatan yang stabil dan sesuai kondisi jalan, serta tetap perhatikan situasi di sekitar. Lalu lintas yang lancar bukan alasan untuk menambah kecepatan secara berlebihan atau mengurangi kewaspadaan.'
     },
     {
       id: 9,
-      question: 'STUDI KASUS - APILL: Lampu hijau tanda panah ke kanan menyala. Apa artinya?',
-      options: ['Semua kendaraan boleh bergerak ke segala arah', 'Hanya kendaraan yang akan belok kanan yang mendapat izin bergerak pada fase ini', 'Pejalan kaki boleh menyeberang', 'Jalur berlawanan mendapat prioritas'],
-      correct: 1,
-      explanation: 'Lampu hijau dengan tanda panah (directional green arrow) berarti HANYA gerakan yang ditunjukkan panah yang diizinkan pada fase tersebut. Tanda panah ke kanan berarti hanya kendaraan yang belok kanan yang boleh bergerak.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di jalan dalam kota. Pengendara tersebut akan berbelok ke kiri ketika melewati sebuah simpang empat. Saat mendekati persimpangan, lampu APILL (Alat Pemberi Isyarat Lalu Lintas) sedang menyala merah dan terdapat pejalan kaki yang sedang menyeberang jalan. Kondisi tersebut mengharuskan pengendara berhati-hati agar tidak membahayakan pejalan kaki maupun pengguna jalan lainnya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mencegah terjadinya kecelakaan di persimpangan tersebut?',
+      options: [
+        'Menambah kecepatan agar segera melewati persimpangan sebelum pejalan kaki selesai menyeberang.',
+        'Membunyikan klakson dan langsung berbelok ke kiri tanpa berhenti.',
+        'Mempertahankan kecepatan 30 km/jam sambil tetap berbelok ke kiri.',
+        'Melakukan pengereman dan berhenti sebelum garis henti serta memberikan kesempatan kepada pejalan kaki untuk menyeberang.'
+      ],
+      correct: 3,
+      image: 'assets/images/quiz-case-red-light-pedestrian.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor mendekati persimpangan dengan lampu merah dan pejalan kaki menyeberang.',
+      explanation: 'Berhenti sebelum garis henti saat lampu APILL merah dan berikan kesempatan kepada pejalan kaki untuk menyelesaikan penyeberangan. Jangan menerobos lampu merah atau membahayakan pejalan kaki.'
     },
     {
       id: 10,
-      question: 'STUDI KASUS - PRIORITAS KENDARAAN: Anda sedang berkendara di jalan dan mendengar sirine ambulans dari belakang. Apa tindakan yang benar?',
-      options: ['Mempertahankan posisi, ambulans yang harus mencari jalan lain', 'Segera menepi ke sisi kiri jalan dan berhenti untuk memberikan jalan kepada ambulans', 'Mempercepat kendaraan agar ambulans bisa mengikuti', 'Pindah ke jalur tengah'],
-      correct: 1,
-      explanation: 'Kendaraan darurat (ambulans, pemadam kebakaran, polisi) dengan sirine aktif memiliki prioritas tertinggi di jalan. Pengemudi wajib segera menepi ke kiri dan berhenti untuk memberikan jalan. Menghalangi laju kendaraan darurat adalah pelanggaran serius.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 25 km/jam di jalan dalam kota. Di depan pengendara terdapat kabut yang cukup tebal sehingga jarak pandang menjadi terbatas dan menyulitkan pengendara untuk melihat kondisi arus lalu lintas di depannya. Kondisi tersebut dapat meningkatkan risiko terjadinya kecelakaan apabila pengendara tidak berhati-hati. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya tabrakan dengan kendaraan lain saat melintasi kawasan berkabut?',
+      options: [
+        'Menambah kecepatan agar segera melewati kawasan berkabut.',
+        'Mempertahankan kecepatan 25 km/jam tanpa memperhatikan jarak pandang.',
+        'Mengurangi kecepatan untuk mengantisipasi kendaraan lain dan mencegah terjadinya tabrakan.',
+        'Membunyikan klakson secara terus-menerus dan tetap melaju dengan kecepatan semula.'
+      ],
+      correct: 2,
+      image: 'assets/images/quiz-case-foggy-road.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor di jalan berkabut dengan jarak pandang terbatas.',
+      explanation: 'Kurangi kecepatan agar tersedia waktu dan jarak yang cukup untuk bereaksi terhadap kendaraan di depan yang sulit terlihat. Tetap waspada dan sesuaikan laju dengan jarak pandang.'
     },
     {
       id: 11,
-      question: 'STUDI KASUS - MARKA JALAN: Tanda "kuning kotak" (yellow box junction) di tengah persimpangan berarti:',
-      options: ['Area parkir darurat', 'Kendaraan dilarang berhenti di dalam kotak tersebut, bahkan saat lampu merah, kecuali saat berbelok', 'Jalur prioritas ambulans', 'Batas kecepatan 20 km/jam'],
-      correct: 1,
-      explanation: 'Yellow Box Junction adalah marka kotak kuning di persimpangan yang melarang kendaraan berhenti di dalamnya. Tujuannya mencegah antrian yang memblokir persimpangan. Kendaraan hanya boleh memasuki kotak jika sudah ada ruang kosong di sisi yang dituju.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di jalan dalam kota. Di depan pengendara terdapat perlintasan kereta api. Saat mendekati perlintasan, palang pintu kereta api sudah ditutup sebagai tanda bahwa kereta akan segera melintas. Kondisi tersebut mengharuskan pengendara berhenti dan menunggu hingga kereta selesai melintas serta situasi dinyatakan aman. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor ketika palang pintu perlintasan kereta api sudah ditutup?',
+      options: [
+        'Menambah kecepatan agar dapat melewati rel sebelum kereta melintas.',
+        'Membunyikan klakson dan menerobos palang pintu kereta api.',
+        'Mempertahankan kecepatan 30 km/jam sambil melewati perlintasan.',
+        'Melakukan pengereman dan berhenti sampai seluruh gerbong kereta selesai melintas serta kondisi aman untuk melanjutkan perjalanan.'
+      ],
+      correct: 3,
+      image: 'assets/images/quiz-case-railway-crossing-closed.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor berhenti di depan palang perlintasan kereta api yang tertutup.',
+      explanation: 'Berhenti sebelum palang perlintasan dan tunggu sampai seluruh kereta melintas, palang terbuka, serta kondisi dipastikan aman sebelum melanjutkan perjalanan. Jangan menerobos palang yang sudah tertutup.'
     },
     {
       id: 12,
-      question: 'STUDI KASUS - PERSIMPANGAN: Anda berkendara di jalan minor (jalan kecil/gang) dan akan masuk ke jalan utama. Apa yang harus Anda lakukan?',
-      options: ['Masuk ke jalan utama jika tidak ada kendaraan dalam radius 100 meter', 'Berhenti atau sangat memperlambat kendaraan dan memberikan prioritas kepada semua kendaraan di jalan utama', 'Menyalakan lampu hazard dan masuk perlahan', 'Kendaraan dari jalan minor selalu didahulukan'],
-      correct: 1,
-      explanation: 'Kendaraan yang keluar dari jalan minor atau gang selalu harus memberikan prioritas kepada semua kendaraan yang sedang melaju di jalan utama. Anda harus berhenti, memeriksa kondisi aman, baru kemudian masuk.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 40 km/jam di jalan dalam kota. Di depan pengendara terdapat seorang pesepeda yang sedang menyeberangi jalan raya. Kondisi tersebut mengharuskan pengendara sepeda motor berhati-hati agar tidak membahayakan pesepeda dan memberikan kesempatan untuk menyeberang dengan aman. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menjaga keselamatan pesepeda yang sedang menyeberang jalan?',
+      options: [
+        'Menambah kecepatan agar segera melewati pesepeda tersebut.',
+        'Membunyikan klakson dan tetap mempertahankan kecepatan 40 km/jam.',
+        'Mengurangi kecepatan agar dapat memberikan kesempatan kepada pesepeda untuk menyeberang dengan aman.',
+        'Mendahului pesepeda tanpa mengurangi kecepatan kendaraan.'
+      ],
+      correct: 2,
+      image: 'assets/images/quiz-case-cyclist-crossing.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor mendekati pesepeda yang sedang menyeberang jalan.',
+      explanation: 'Kurangi kecepatan dan beri pesepeda kesempatan untuk menyeberang dengan aman. Tetap waspada serta jangan mendahului dengan kecepatan yang dapat membahayakan pengguna jalan lain.'
     },
     {
       id: 13,
-      question: 'STUDI KASUS - APILL: Lampu lalu lintas hijau menyala, namun di depan persimpangan ada kemacetan panjang sehingga kendaraan tidak dapat bergerak. Apa yang sebaiknya dilakukan?',
-      options: ['Tetap maju karena lampu hijau memberikan hak melaju', 'Tidak memasuki persimpangan meskipun lampu hijau, tunggu sampai ada ruang kosong di depan', 'Masuk persimpangan dan berhenti di tengah', 'Gunakan jalur darurat'],
-      correct: 1,
-      explanation: 'Meskipun lampu hijau menyala, Anda tidak boleh memasuki persimpangan jika tidak ada ruang yang cukup di sisi keluar. Ini akan menyebabkan "gridlock" (persimpangan macet total) dan memblokir kendaraan dari arah lain. Tunggu di belakang garis stop hingga ruang di depan tersedia.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di jalan dalam kota. Di depan pengendara terdapat seseorang yang sedang melakukan kegiatan bongkar muat barang dan hendak menyeberang jalan. Pada saat yang bersamaan, terdapat mobil yang akan melintas dari arah berlawanan. Kondisi tersebut dapat menimbulkan risiko kecelakaan apabila pengendara tidak berhati-hati dan tidak memberikan ruang yang cukup bagi pengguna jalan lainnya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya kecelakaan dalam kondisi tersebut?',
+      options: [
+        'Menambah kecepatan agar dapat melewati orang dan mobil tersebut dengan cepat.',
+        'Mempertahankan kecepatan 30 km/jam sambil melewati orang yang sedang menyeberang.',
+        'Membunyikan klakson dan langsung mendahului mobil dari arah berlawanan.',
+        'Melakukan pengereman dan berhenti sejenak untuk memberikan kesempatan kepada orang tersebut menyelesaikan penyeberangan serta menunggu mobil dari arah berlawanan melintas.'
+      ],
+      correct: 3,
+      image: 'assets/images/quiz-case-loading-pedestrian.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor mendekati orang yang melakukan bongkar muat dan hendak menyeberang jalan.',
+      explanation: 'Kurangi kecepatan dan berhenti sejenak agar orang tersebut dapat menyelesaikan penyeberangan. Tunggu sampai mobil dari arah berlawanan melintas dan ruang jalan cukup aman sebelum melanjutkan perjalanan.'
     },
     {
       id: 14,
-      question: 'STUDI KASUS - MARKA JALAN: Anda melewati marka "chevron" (panah V berderet) di tikungan tajam. Apa artinya?',
-      options: ['Jalan satu arah ke kiri', 'Petunjuk arah tikungan, menunjukkan bahwa jalan berbelok ke arah panah', 'Kawasan konstruksi', 'Batas jalur bus'],
-      correct: 1,
-      explanation: 'Marka chevron (panah V yang berderet) dipasang di tikungan tajam untuk menunjukkan arah tikungan jalan. Fungsinya sebagai panduan visual agar pengemudi dapat mengikuti alur jalan dengan aman, terutama di malam hari atau kondisi jarak pandang rendah.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di jalan dalam kota. Pengendara tersebut akan berbelok ke kanan pada persimpangan dengan lampu APILL (Alat Pemberi Isyarat Lalu Lintas) terdekat. Saat mendekati persimpangan, terdapat beberapa pesepeda yang memasuki lajur yang sedang dilalui pengendara sepeda motor. Kondisi tersebut berpotensi menimbulkan kecelakaan apabila pengendara tidak menjaga jarak aman dengan pesepeda di depannya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menjaga jarak aman dan menghindari terjadinya kecelakaan dengan pesepeda?',
+      options: [
+        'Menambah kecepatan agar segera melewati pesepeda sebelum mencapai persimpangan.',
+        'Membunyikan klakson dan tetap mempertahankan kecepatan 50 km/jam.',
+        'Melakukan pengereman untuk mengurangi kecepatan dan menjaga jarak aman dengan pesepeda di depan.',
+        'Mendahului beberapa pesepeda sekaligus tanpa mengurangi kecepatan kendaraan.'
+      ],
+      correct: 2,
+      image: 'assets/images/quiz-case-cyclists-entering-lane.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor mendekati beberapa pesepeda yang memasuki lajur di dekat persimpangan.',
+      explanation: 'Kurangi kecepatan dengan mengerem secara terkendali dan jaga jarak aman dari pesepeda. Tetap waspada di dekat persimpangan dan lanjutkan manuver hanya saat tersedia ruang yang aman.'
     },
     {
       id: 15,
-      question: 'STUDI KASUS - PRIORITAS: Seorang pengendara motor sedang berkendara di bahu jalan (shoulder). Apakah ini diizinkan?',
-      options: ['Ya, boleh untuk menghindari kemacetan', 'Tidak, bahu jalan diperuntukkan untuk kedaruratan, bukan untuk berkendara reguler', 'Boleh jika kecepatan di bawah 20 km/jam', 'Boleh untuk kendaraan roda dua saja'],
-      correct: 1,
-      explanation: 'Bahu jalan (shoulder/jalur darurat) diperuntukkan khusus untuk kendaraan yang mengalami kerusakan, kendaraan darurat, dan pejalan kaki. Berkendara di bahu jalan adalah pelanggaran UU LLAJ meskipun kondisi sedang macet.'
-    },
-    {
-      id: 16,
-      question: 'STUDI KASUS - PERSIMPANGAN KERETA API: Anda mendekati perlintasan kereta api tanpa palang pintu. Apa tindakan yang benar?',
-      options: ['Melaju jika tidak terdengar suara kereta', 'Berhenti, lihat ke kiri dan kanan untuk memastikan tidak ada kereta, baru menyeberang dengan cepat', 'Mempercepat kendaraan untuk segera melewati perlintasan', 'Ikuti kendaraan di depan saja'],
-      correct: 1,
-      explanation: 'Di perlintasan kereta api tanpa palang pintu, pengemudi WAJIB berhenti dan memeriksa keamanan dari kedua arah sebelum melintas. Kereta api selalu mendapat prioritas dan tidak bisa berhenti mendadak, sehingga pengemudi yang harus sangat berhati-hati.'
-    },
-    {
-      id: 17,
-      question: 'STUDI KASUS - APILL: Anda berkendara di persimpangan dan lampu bagi arah Anda baru saja berubah menjadi hijau. Apa yang harus Anda perhatikan sebelum melaju?',
-      options: ['Langsung gas karena sudah hijau', 'Periksa dahulu apakah ada kendaraan dari arah lain yang masih menerobos lampu merah, baru melaju dengan aman', 'Bunyikan klakson sebagai tanda siap', 'Tidak perlu cek apapun, hijau berarti aman'],
-      correct: 1,
-      explanation: 'Meskipun lampu sudah hijau, selalu periksa kondisi persimpangan terlebih dahulu sebelum melaju. Ada kemungkinan kendaraan dari arah lain menerobos lampu merah. Kehati-hatian ini adalah prinsip dasar defensive driving.'
-    },
-    {
-      id: 18,
-      question: 'STUDI KASUS - MARKA JALAN: Garis marka putih di sisi paling kiri jalan (antara jalur kendaraan dan bahu jalan) adalah:',
-      options: ['Garis batas kecepatan', 'Garis tepi jalan yang menandakan batas lajur kendaraan dengan bahu jalan atau median', 'Garis jalur sepeda', 'Batas parkir'],
-      correct: 1,
-      explanation: 'Garis marka putih di tepi paling kiri jalan adalah garis tepi (edge line) yang menandakan batas antara jalur lalu lintas dengan bahu jalan. Kendaraan tidak boleh melewati garis ini kecuali dalam keadaan darurat atau untuk berhenti.'
-    },
-    {
-      id: 19,
-      question: 'STUDI KASUS - KONDISI HUJAN: Saat hujan deras, jarak pandang sangat terbatas. Tindakan keselamatan yang tepat adalah:',
-      options: ['Nyalakan lampu hazard dan tetap melaju kencang', 'Kurangi kecepatan, tingkatkan jarak aman dengan kendaraan di depan, nyalakan lampu utama (dekat)', 'Berhenti di tepi jalan dan nyalakan lampu hazard selamanya', 'Menyalakan lampu jauh agar terlihat'],
-      correct: 1,
-      explanation: 'Dalam kondisi hujan deras: (1) Kurangi kecepatan secara signifikan, (2) Tingkatkan jarak aman (lebih dari 3 detik), (3) Nyalakan lampu utama dekat (bukan jauh, karena pantulan dapat mengurangi pandangan), (4) Waspada terhadap aquaplaning (ban terangkat di atas genangan air).'
-    },
-    {
-      id: 20,
-      question: 'STUDI KASUS - BLIND SPOT: Anda akan berganti jalur ke kanan. Setelah memeriksa spion kanan dan tampaknya kosong, apa langkah keselamatan tambahan yang perlu dilakukan?',
-      options: ['Langsung pindah jalur', 'Palingkan kepala sebentar untuk memeriksa blind spot di area yang tidak terjangkau spion, baru pindah jalur jika aman', 'Cukup bunyikan sein kanan', 'Percayakan sepenuhnya pada sensor parkir'],
-      correct: 1,
-      explanation: 'Setiap kendaraan memiliki "blind spot" (titik buta) yang tidak dapat dilihat melalui spion. Sebelum berpindah jalur, selalu palingkan kepala untuk memeriksa blind spot secara langsung. Ini adalah teknik keselamatan fundamental yang tidak dapat digantikan oleh teknologi spion manapun.'
+      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 20 km/jam di jalan dalam kota. Di depan pengendara terdapat pasar tumpah dengan masyarakat yang sedang melakukan aktivitas jual beli di sisi kanan dan kiri bahu jalan. Kondisi tersebut menyebabkan aktivitas masyarakat cukup ramai dan berpotensi mengganggu ruang gerak kendaraan yang melintas. Oleh karena itu, pengendara harus lebih berhati-hati agar tidak menyerempet masyarakat yang sedang beraktivitas. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya kecelakaan dengan masyarakat yang sedang beraktivitas di pasar tumpah?',
+      options: [
+        'Menambah kecepatan agar segera melewati kawasan pasar tumpah.',
+        'Mempertahankan kecepatan 20 km/jam tanpa memperhatikan aktivitas masyarakat di sekitar jalan.',
+        'Mengurangi kecepatan dan berkendara dengan hati-hati untuk mengantisipasi masyarakat yang berada di sekitar jalan.',
+        'Membunyikan klakson secara terus-menerus agar masyarakat segera menjauh dari jalan.'
+      ],
+      correct: 2,
+      image: 'assets/images/quiz-case-roadside-market.png',
+      imageAlt: 'Sudut pandang pengendara sepeda motor melewati pasar tumpah dengan masyarakat beraktivitas di kedua sisi jalan.',
+      explanation: 'Kurangi kecepatan dan berkendara dengan hati-hati di sekitar pasar tumpah. Waspadai pergerakan masyarakat di kedua sisi jalan dan berikan ruang yang cukup agar tidak menyerempet mereka.'
     }
   ];
-
   /* --------------------------------------------------------------------------
    * 2. STATE KUIS
    * -------------------------------------------------------------------------- */
@@ -567,6 +636,11 @@
    * 3. INISIALISASI KUIS
    * -------------------------------------------------------------------------- */
   function initQuiz() {
+    const quiz2QuestionCount = document.getElementById('quiz-2-question-count');
+    if (quiz2QuestionCount) {
+      quiz2QuestionCount.textContent = QUIZ_2_QUESTIONS.length.toString();
+    }
+
     // Quiz 1 - Start button
     const startQ1Btn = document.getElementById('quiz-1-start-btn');
     if (startQ1Btn) {
@@ -586,7 +660,7 @@
     quizState.currentQuizId = quizId;
     quizState.questions = quizId === '1'
       ? [...QUIZ_1_QUESTIONS]
-      : shuffleArray([...QUIZ_2_QUESTIONS]).slice(0, 15); // 15 random from 20
+      : [...QUIZ_2_QUESTIONS];
     quizState.currentIndex = 0;
     quizState.answers = [];
     quizState.isAnswered = false;
@@ -633,30 +707,43 @@
     if (qId === '1') {
       const signImage = document.getElementById('quiz-1-sign');
       const sign = QUIZ_1_SIGN_ILLUSTRATIONS[q.id - 1];
-    if (signImage) {
-      signImage.classList.toggle('hidden', !sign);
-      if (sign) {
-        signImage.innerHTML = '';
-        if (sign.image) {
-          const image = document.createElement('img');
-          image.src = sign.image;
-          image.alt = sign.label;
-          image.draggable = false;
-          signImage.appendChild(image);
+      if (signImage) {
+        signImage.classList.toggle('hidden', !sign);
+        if (sign) {
+          signImage.innerHTML = '';
+          if (sign.image) {
+            const image = document.createElement('img');
+            image.src = sign.image;
+            image.alt = sign.label;
+            image.draggable = false;
+            signImage.appendChild(image);
+          } else {
+            signImage.innerHTML = createTrafficSignSvg(sign);
+          }
+          signImage.setAttribute('aria-label', sign.label);
+          signImage.setAttribute('title', sign.label);
+          const caption = document.createElement('span');
+          caption.className = 'quiz-sign-caption';
+          caption.textContent = sign.label;
+          signImage.appendChild(caption);
         } else {
-          signImage.innerHTML = createTrafficSignSvg(sign);
+          signImage.innerHTML = '';
+          signImage.removeAttribute('title');
         }
-        signImage.setAttribute('aria-label', sign.label);
-        signImage.setAttribute('title', sign.label);
-        const caption = document.createElement('span');
-        caption.className = 'quiz-sign-caption';
-        caption.textContent = sign.label;
-        signImage.appendChild(caption);
-      } else {
-        signImage.innerHTML = '';
-        signImage.removeAttribute('title');
       }
     }
+
+    const caseImageContainer = document.getElementById(`quiz-${qId}-case-image`);
+    if (caseImageContainer) {
+      caseImageContainer.classList.toggle('hidden', !q.image);
+      caseImageContainer.replaceChildren();
+      if (q.image) {
+        const image = document.createElement('img');
+        image.src = q.image;
+        image.alt = q.imageAlt || '';
+        image.draggable = false;
+        caseImageContainer.appendChild(image);
+      }
     }
 
     // Options
@@ -789,7 +876,7 @@
       const btns = optionsContainer.querySelectorAll('.quiz-option-btn');
       btns.forEach((btn, i) => {
         btn.disabled = true;
-        if (i === q.correct) {
+        if (selectedIndex !== -1 && i === q.correct) {
           btn.classList.add('correct');
         } else if (i === selectedIndex && !isCorrect) {
           btn.classList.add('wrong');
@@ -883,17 +970,21 @@
       reviewContainer.innerHTML = '';
       quizState.answers.forEach((ans, idx) => {
         const q = quizState.questions[idx];
+        const unanswered = ans.selectedIndex === -1;
         const div = document.createElement('div');
-        div.className = `review-item ${ans.isCorrect ? 'review-correct' : 'review-wrong'}`;
+        const statusClass = unanswered ? 'review-unanswered' : ans.isCorrect ? 'review-correct' : 'review-wrong';
+        const badgeClass = unanswered ? 'badge-unanswered' : ans.isCorrect ? 'badge-correct' : 'badge-wrong';
+        const badgeText = unanswered ? '–' : ans.isCorrect ? '✓' : '✗';
+        div.className = `review-item ${statusClass}`;
         div.innerHTML = `
           <div class="review-q-header">
-            <span class="review-badge ${ans.isCorrect ? 'badge-correct' : 'badge-wrong'}">${ans.isCorrect ? '✓' : '✗'}</span>
+            <span class="review-badge ${badgeClass}">${badgeText}</span>
             <strong>Soal ${idx + 1}</strong>
           </div>
           <p class="review-question">${q.question}</p>
           ${!ans.isCorrect && ans.selectedIndex !== -1 ? `<p class="review-selected">Jawaban Anda: <em>${q.options[ans.selectedIndex]}</em></p>` : ''}
-          ${ans.selectedIndex === -1 ? `<p class="review-selected">Jawaban Anda: <em>Tidak dijawab (waktu habis)</em></p>` : ''}
-          <p class="review-answer">Jawaban Benar: <strong>${q.options[q.correct]}</strong></p>
+          ${unanswered ? `<p class="review-selected">Jawaban Anda: <em>Tidak dijawab (waktu habis)</em></p>` : ''}
+          <p class="review-answer${unanswered ? ' review-answer-unanswered' : ''}">Jawaban Benar: <strong>${q.options[q.correct]}</strong></p>
         `;
         reviewContainer.appendChild(div);
       });
@@ -907,18 +998,7 @@
   }
 
   /* --------------------------------------------------------------------------
-   * 9. UTILITIES
-   * -------------------------------------------------------------------------- */
-  function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-
-  /* --------------------------------------------------------------------------
-   * 10. PUBLIC API
+   * 9. PUBLIC API
    * -------------------------------------------------------------------------- */
   window.ELintasQuiz = {
     init: initQuiz,
