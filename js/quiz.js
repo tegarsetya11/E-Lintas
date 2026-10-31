@@ -409,12 +409,12 @@
   const QUIZ_2_QUESTIONS = [
     {
       id: 1,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di wilayah perkotaan. Di sebelah kiri terdapat sebuah mobil yang sedang parkir. Namun, lampu belakang mobil tersebut masih menyala dan terlihat pengemudinya masih berada di dalam mobil. Kondisi tersebut berpotensi menimbulkan bahaya apabila mobil tiba-tiba bergerak atau keluar dari tempat parkir. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mengantisipasi terjadinya kecelakaan?',
+      question: 'Mobil parkir di tepi jalan, lampu belakang menyala, dan pengemudinya masih di dalam. Apa yang sebaiknya dilakukan?',
       options: [
-        'Tetap mempertahankan kecepatan 50 km/jam agar perjalanan lebih cepat.',
-        'Membunyikan klakson dan langsung mendahului mobil dari sebelah kiri.',
-        'Mengurangi kecepatan untuk mengantisipasi kemungkinan mobil bergerak atau keluar dari tempat parkir.',
-        'Menambah kecepatan agar segera melewati mobil yang sedang parkir.'
+        'Pertahankan kecepatan.',
+        'Klakson lalu salip dari kiri.',
+        'Kurangi kecepatan dan waspadai mobil.',
+        'Tambah kecepatan untuk segera lewat.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-parked-car.png',
@@ -423,12 +423,12 @@
     },
     {
       id: 2,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di wilayah permukiman. Di bahu jalan terdapat anak-anak yang sedang bermain bola. Kondisi tersebut berpotensi membahayakan keselamatan karena bola atau anak-anak dapat tiba-tiba bergerak ke arah jalan raya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mencegah terjadinya kecelakaan?',
+      question: 'Anak-anak bermain bola di tepi jalan permukiman. Apa tindakan yang tepat?',
       options: [
-        'Menambah kecepatan agar segera melewati anak-anak yang sedang bermain.',
-        'Membunyikan klakson dan tetap mempertahankan kecepatan kendaraan.',
-        'Mengurangi jarak aman dengan anak-anak agar tidak menghambat perjalanan.',
-        'Melakukan pengereman untuk mengurangi kecepatan dan mencegah terjadinya kecelakaan.'
+        'Tambah kecepatan agar cepat lewat.',
+        'Klakson dan pertahankan kecepatan.',
+        'Dekati anak-anak agar tidak menghambat.',
+        'Kurangi kecepatan dan waspada.'
       ],
       correct: 3,
       image: 'assets/images/quiz-case-playing-children.png',
@@ -437,12 +437,12 @@
     },
     {
       id: 3,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di jalan dalam kota. Pengendara tersebut akan berbelok ke kiri ketika melewati sebuah simpang tiga. Di sekitar persimpangan terdapat kemungkinan pejalan kaki yang akan menyeberang jalan. Kondisi ini mengharuskan pengendara lebih berhati-hati agar tidak membahayakan pengguna jalan lainnya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mencegah terjadinya kecelakaan, terutama dengan pejalan kaki yang akan menyeberang jalan?',
+      question: 'Anda akan belok kiri di simpang tiga, dan ada pejalan kaki yang mungkin menyeberang. Apa yang dilakukan?',
       options: [
-        'Menambah kecepatan agar segera melewati persimpangan.',
-        'Membunyikan klakson dan langsung berbelok ke kiri.',
-        'Mengurangi kecepatan untuk mengantisipasi pejalan kaki yang akan menyeberang jalan.',
-        'Mempertahankan kecepatan 50 km/jam saat berbelok ke kiri.'
+        'Tambah kecepatan melewati simpang.',
+        'Klakson lalu langsung belok.',
+        'Kurangi kecepatan dan waspadai pejalan kaki.',
+        'Pertahankan kecepatan saat belok.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-left-turn-pedestrian.png',
@@ -451,12 +451,12 @@
     },
     {
       id: 4,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di kawasan pertokoan. Di depan pengendara terdapat polisi tidur dan sebuah mobil yang akan mundur. Kondisi tersebut berpotensi menimbulkan kecelakaan apabila pengendara tidak menjaga jarak dan kecepatan kendaraannya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mengantisipasi terjadinya kecelakaan dengan mobil yang akan mundur di depannya?',
+      question: 'Ada polisi tidur dan mobil di depan yang akan mundur. Apa yang sebaiknya dilakukan?',
       options: [
-        'Menambah kecepatan agar segera melewati polisi tidur.',
-        'Mempertahankan kecepatan 50 km/jam dan tetap mendekati mobil di depan.',
-        'Membunyikan klakson dan langsung mendahului mobil tersebut.',
-        'Mengurangi kecepatan untuk mengantisipasi mobil yang akan mundur dan mencegah terjadinya kecelakaan.'
+        'Tambah kecepatan melewati polisi tidur.',
+        'Pertahankan kecepatan dan dekati mobil.',
+        'Klakson lalu langsung salip.',
+        'Kurangi kecepatan dan jaga jarak.'
       ],
       correct: 3,
       image: 'assets/images/quiz-case-reversing-car-speed-bump.png',
@@ -465,12 +465,12 @@
     },
     {
       id: 5,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 20 km/jam di jalan dalam kota. Di depan pengendara terdapat genangan air yang cukup luas dan dapat mengganggu perjalanan. Jika pengendara melaju terlalu cepat melewati genangan tersebut, percikan air dapat mengenai pengguna jalan lainnya sehingga mengganggu kenyamanan mereka. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menjaga keselamatan dan kenyamanan pengguna jalan lainnya?',
+      question: 'Anda akan melewati genangan air di jalan. Apa tindakan yang tepat?',
       options: [
-        'Menambah kecepatan agar segera melewati genangan air.',
-        'Mempertahankan kecepatan 20 km/jam saat melewati genangan air.',
-        'Mengurangi kecepatan untuk mencegah percikan air yang dapat mengganggu pengguna jalan lainnya.',
-        'Membunyikan klakson dan melewati genangan air dengan cepat.'
+        'Tambah kecepatan.',
+        'Pertahankan kecepatan.',
+        'Kurangi kecepatan agar tidak memercik.',
+        'Klakson dan lewati dengan cepat.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-water-puddle.png',
@@ -479,12 +479,12 @@
     },
     {
       id: 6,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di jalan dalam kota. Di depan pengendara terdapat kemacetan lalu lintas yang menyebabkan kendaraan bergerak sangat lambat bahkan berhenti. Kondisi tersebut mengharuskan pengendara berhati-hati agar tidak menabrak kendaraan lain di depannya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya kecelakaan akibat kemacetan lalu lintas?',
+      question: 'Lalu lintas di depan macet dan kendaraan berhenti. Apa yang harus dilakukan?',
       options: [
-        'Menambah kecepatan agar dapat melewati kemacetan dengan cepat.',
-        'Membunyikan klakson secara terus-menerus agar kendaraan di depan segera berjalan.',
-        'Tetap mempertahankan kecepatan 50 km/jam meskipun kondisi jalan macet.',
-        'Melakukan pengereman dan berhenti sampai kondisi lalu lintas memungkinkan untuk melanjutkan perjalanan.'
+        'Tambah kecepatan menerobos macet.',
+        'Klakson terus agar kendaraan maju.',
+        'Pertahankan kecepatan.',
+        'Rem dan berhenti dengan jarak aman.'
       ],
       correct: 3,
       image: 'assets/images/quiz-case-traffic-jam.png',
@@ -493,12 +493,12 @@
     },
     {
       id: 7,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 20 km/jam di kawasan permukiman. Kondisi jalan di depan pengendara terlihat lengang dan tidak terdapat kendaraan lain yang melintas. Meskipun kondisi jalan cukup aman, pengendara tetap harus memperhatikan situasi lalu lintas di sekitarnya untuk menjaga keselamatan selama perjalanan. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor ketika kondisi jalan di kawasan permukiman sedang lengang?',
+      question: 'Jalan permukiman tampak lengang. Bagaimana sebaiknya berkendara?',
       options: [
-        'Menambah kecepatan agar perjalanan lebih cepat sampai tujuan.',
-        'Melanjutkan perjalanan dengan kecepatan stabil serta tetap memperhatikan kondisi lalu lintas di sekitar.',
-        'Menghentikan kendaraan meskipun kondisi jalan aman dan tidak ada hambatan.',
-        'Mengurangi kecepatan secara terus-menerus hingga kendaraan hampir berhenti.'
+        'Tambah kecepatan agar cepat sampai.',
+        'Jaga kecepatan stabil dan tetap waspada.',
+        'Berhenti meski jalan aman.',
+        'Terus kurangi kecepatan hingga hampir berhenti.'
       ],
       correct: 1,
       image: 'assets/images/quiz-case-quiet-residential-road.png',
@@ -507,12 +507,12 @@
     },
     {
       id: 8,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 40 km/jam di jalan dalam kota. Kondisi lalu lintas di depan pengendara terpantau lancar dengan jarak aman antar kendaraan. Tidak terdapat hambatan yang mengganggu perjalanan. Meskipun kondisi lalu lintas lancar, pengendara tetap harus memperhatikan situasi di sekitarnya agar perjalanan tetap aman. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor ketika kondisi lalu lintas di depannya lancar dan aman?',
+      question: 'Lalu lintas lancar dan jarak antar kendaraan aman. Apa yang sebaiknya dilakukan?',
       options: [
-        'Menambah kecepatan secara berlebihan agar lebih cepat sampai tujuan.',
-        'Melakukan pengereman dan berhenti meskipun kondisi lalu lintas lancar.',
-        'Melanjutkan perjalanan dengan kecepatan stabil serta tetap memperhatikan kondisi lalu lintas di sekitar.',
-        'Mengurangi kecepatan secara tiba-tiba tanpa adanya hambatan di jalan.'
+        'Tambah kecepatan berlebihan.',
+        'Berhenti meski jalan lancar.',
+        'Jaga kecepatan stabil dan tetap waspada.',
+        'Kurangi kecepatan tiba-tiba.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-clear-traffic.png',
@@ -521,12 +521,12 @@
     },
     {
       id: 9,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di jalan dalam kota. Pengendara tersebut akan berbelok ke kiri ketika melewati sebuah simpang empat. Saat mendekati persimpangan, lampu APILL (Alat Pemberi Isyarat Lalu Lintas) sedang menyala merah dan terdapat pejalan kaki yang sedang menyeberang jalan. Kondisi tersebut mengharuskan pengendara berhati-hati agar tidak membahayakan pejalan kaki maupun pengguna jalan lainnya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk mencegah terjadinya kecelakaan di persimpangan tersebut?',
+      question: 'Lampu merah menyala saat Anda mendekati simpang; pejalan kaki sedang menyeberang. Apa yang harus dilakukan?',
       options: [
-        'Menambah kecepatan agar segera melewati persimpangan sebelum pejalan kaki selesai menyeberang.',
-        'Membunyikan klakson dan langsung berbelok ke kiri tanpa berhenti.',
-        'Mempertahankan kecepatan 30 km/jam sambil tetap berbelok ke kiri.',
-        'Melakukan pengereman dan berhenti sebelum garis henti serta memberikan kesempatan kepada pejalan kaki untuk menyeberang.'
+        'Percepat melewati simpang.',
+        'Klakson lalu belok tanpa berhenti.',
+        'Tetap melaju dan belok.',
+        'Berhenti sebelum garis henti dan dahulukan pejalan kaki.'
       ],
       correct: 3,
       image: 'assets/images/quiz-case-red-light-pedestrian.png',
@@ -535,12 +535,12 @@
     },
     {
       id: 10,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 25 km/jam di jalan dalam kota. Di depan pengendara terdapat kabut yang cukup tebal sehingga jarak pandang menjadi terbatas dan menyulitkan pengendara untuk melihat kondisi arus lalu lintas di depannya. Kondisi tersebut dapat meningkatkan risiko terjadinya kecelakaan apabila pengendara tidak berhati-hati. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya tabrakan dengan kendaraan lain saat melintasi kawasan berkabut?',
+      question: 'Kabut tebal membatasi jarak pandang. Apa yang sebaiknya dilakukan?',
       options: [
-        'Menambah kecepatan agar segera melewati kawasan berkabut.',
-        'Mempertahankan kecepatan 25 km/jam tanpa memperhatikan jarak pandang.',
-        'Mengurangi kecepatan untuk mengantisipasi kendaraan lain dan mencegah terjadinya tabrakan.',
-        'Membunyikan klakson secara terus-menerus dan tetap melaju dengan kecepatan semula.'
+        'Tambah kecepatan agar cepat melewati kabut.',
+        'Pertahankan kecepatan tanpa memperhatikan jarak pandang.',
+        'Kurangi kecepatan dan waspadai kendaraan lain.',
+        'Klakson terus dan tetap melaju.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-foggy-road.png',
@@ -549,12 +549,12 @@
     },
     {
       id: 11,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di jalan dalam kota. Di depan pengendara terdapat perlintasan kereta api. Saat mendekati perlintasan, palang pintu kereta api sudah ditutup sebagai tanda bahwa kereta akan segera melintas. Kondisi tersebut mengharuskan pengendara berhenti dan menunggu hingga kereta selesai melintas serta situasi dinyatakan aman. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor ketika palang pintu perlintasan kereta api sudah ditutup?',
+      question: 'Palang perlintasan kereta api sudah tertutup. Apa yang harus dilakukan?',
       options: [
-        'Menambah kecepatan agar dapat melewati rel sebelum kereta melintas.',
-        'Membunyikan klakson dan menerobos palang pintu kereta api.',
-        'Mempertahankan kecepatan 30 km/jam sambil melewati perlintasan.',
-        'Melakukan pengereman dan berhenti sampai seluruh gerbong kereta selesai melintas serta kondisi aman untuk melanjutkan perjalanan.'
+        'Percepat agar mendahului kereta.',
+        'Klakson dan terobos palang.',
+        'Tetap melaju melewati rel.',
+        'Berhenti dan tunggu sampai aman.'
       ],
       correct: 3,
       image: 'assets/images/quiz-case-railway-crossing-closed.png',
@@ -563,12 +563,12 @@
     },
     {
       id: 12,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 40 km/jam di jalan dalam kota. Di depan pengendara terdapat seorang pesepeda yang sedang menyeberangi jalan raya. Kondisi tersebut mengharuskan pengendara sepeda motor berhati-hati agar tidak membahayakan pesepeda dan memberikan kesempatan untuk menyeberang dengan aman. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menjaga keselamatan pesepeda yang sedang menyeberang jalan?',
+      question: 'Seorang pesepeda sedang menyeberang jalan. Apa tindakan yang tepat?',
       options: [
-        'Menambah kecepatan agar segera melewati pesepeda tersebut.',
-        'Membunyikan klakson dan tetap mempertahankan kecepatan 40 km/jam.',
-        'Mengurangi kecepatan agar dapat memberikan kesempatan kepada pesepeda untuk menyeberang dengan aman.',
-        'Mendahului pesepeda tanpa mengurangi kecepatan kendaraan.'
+        'Tambah kecepatan untuk segera lewat.',
+        'Klakson dan pertahankan kecepatan.',
+        'Kurangi kecepatan dan beri pesepeda jalan.',
+        'Salip tanpa mengurangi kecepatan.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-cyclist-crossing.png',
@@ -577,12 +577,12 @@
     },
     {
       id: 13,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 30 km/jam di jalan dalam kota. Di depan pengendara terdapat seseorang yang sedang melakukan kegiatan bongkar muat barang dan hendak menyeberang jalan. Pada saat yang bersamaan, terdapat mobil yang akan melintas dari arah berlawanan. Kondisi tersebut dapat menimbulkan risiko kecelakaan apabila pengendara tidak berhati-hati dan tidak memberikan ruang yang cukup bagi pengguna jalan lainnya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya kecelakaan dalam kondisi tersebut?',
+      question: 'Seseorang hendak menyeberang, sementara mobil datang dari arah berlawanan. Apa yang dilakukan?',
       options: [
-        'Menambah kecepatan agar dapat melewati orang dan mobil tersebut dengan cepat.',
-        'Mempertahankan kecepatan 30 km/jam sambil melewati orang yang sedang menyeberang.',
-        'Membunyikan klakson dan langsung mendahului mobil dari arah berlawanan.',
-        'Melakukan pengereman dan berhenti sejenak untuk memberikan kesempatan kepada orang tersebut menyelesaikan penyeberangan serta menunggu mobil dari arah berlawanan melintas.'
+        'Tambah kecepatan agar cepat lewat.',
+        'Tetap melaju saat orang menyeberang.',
+        'Klakson dan salip mobil dari lawan arah.',
+        'Berhenti sejenak sampai aman untuk melanjutkan.'
       ],
       correct: 3,
       image: 'assets/images/quiz-case-loading-pedestrian.png',
@@ -591,12 +591,12 @@
     },
     {
       id: 14,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 50 km/jam di jalan dalam kota. Pengendara tersebut akan berbelok ke kanan pada persimpangan dengan lampu APILL (Alat Pemberi Isyarat Lalu Lintas) terdekat. Saat mendekati persimpangan, terdapat beberapa pesepeda yang memasuki lajur yang sedang dilalui pengendara sepeda motor. Kondisi tersebut berpotensi menimbulkan kecelakaan apabila pengendara tidak menjaga jarak aman dengan pesepeda di depannya. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menjaga jarak aman dan menghindari terjadinya kecelakaan dengan pesepeda?',
+      question: 'Beberapa pesepeda masuk ke lajur Anda menjelang persimpangan. Apa tindakan yang tepat?',
       options: [
-        'Menambah kecepatan agar segera melewati pesepeda sebelum mencapai persimpangan.',
-        'Membunyikan klakson dan tetap mempertahankan kecepatan 50 km/jam.',
-        'Melakukan pengereman untuk mengurangi kecepatan dan menjaga jarak aman dengan pesepeda di depan.',
-        'Mendahului beberapa pesepeda sekaligus tanpa mengurangi kecepatan kendaraan.'
+        'Tambah kecepatan melewati pesepeda.',
+        'Klakson dan pertahankan kecepatan.',
+        'Kurangi kecepatan dan jaga jarak.',
+        'Salip semua pesepeda dengan cepat.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-cyclists-entering-lane.png',
@@ -605,12 +605,12 @@
     },
     {
       id: 15,
-      question: 'Seorang pengendara sepeda motor sedang melaju dengan kecepatan 20 km/jam di jalan dalam kota. Di depan pengendara terdapat pasar tumpah dengan masyarakat yang sedang melakukan aktivitas jual beli di sisi kanan dan kiri bahu jalan. Kondisi tersebut menyebabkan aktivitas masyarakat cukup ramai dan berpotensi mengganggu ruang gerak kendaraan yang melintas. Oleh karena itu, pengendara harus lebih berhati-hati agar tidak menyerempet masyarakat yang sedang beraktivitas. Apa tindakan yang seharusnya dilakukan oleh pengendara sepeda motor untuk menghindari terjadinya kecelakaan dengan masyarakat yang sedang beraktivitas di pasar tumpah?',
+      question: 'Orang ramai beraktivitas di tepi jalan pasar. Bagaimana sebaiknya Anda berkendara?',
       options: [
-        'Menambah kecepatan agar segera melewati kawasan pasar tumpah.',
-        'Mempertahankan kecepatan 20 km/jam tanpa memperhatikan aktivitas masyarakat di sekitar jalan.',
-        'Mengurangi kecepatan dan berkendara dengan hati-hati untuk mengantisipasi masyarakat yang berada di sekitar jalan.',
-        'Membunyikan klakson secara terus-menerus agar masyarakat segera menjauh dari jalan.'
+        'Tambah kecepatan melewati pasar.',
+        'Pertahankan kecepatan dan abaikan keramaian.',
+        'Kurangi kecepatan dan waspadai orang sekitar.',
+        'Klakson terus agar orang menjauh.'
       ],
       correct: 2,
       image: 'assets/images/quiz-case-roadside-market.png',
