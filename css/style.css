@@ -2629,7 +2629,6 @@ kbd {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
   margin: 0 auto 1rem;
   min-height: 154px;
 }
@@ -2652,13 +2651,6 @@ kbd {
   height: auto;
   max-height: 420px;
   border-radius: var(--radius-md);
-}
-
-.quiz-sign-caption {
-  color: var(--color-neutral-gray);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-align: center;
 }
 
 .quiz-q-text {

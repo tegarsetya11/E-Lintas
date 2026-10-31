@@ -275,31 +275,31 @@
 
   /** Ilustrasi untuk 25 soal pertama yang membahas rambu. */
   const QUIZ_1_SIGN_ILLUSTRATIONS = [
-    { image: 'assets/images/quiz-no-entry.jpg', label: 'Dilarang Masuk' },
-    { image: 'assets/images/quiz-no-parking.jpg', label: 'Dilarang Parkir' },
-    { image: 'assets/images/quiz-no-stopping.jpg', label: 'Dilarang Berhenti' },
-    { image: 'assets/images/quiz-speed-limit-40.jpg', label: 'Batas Kecepatan Maksimum 40 km/jam' },
-    { image: 'assets/images/quiz-no-left-turn.png', label: 'Dilarang Belok Kiri' },
-    { image: 'assets/images/quiz-no-right-turn.png', label: 'Dilarang Belok Kanan' },
-    { image: 'assets/images/quiz-no-u-turn.png', label: 'Dilarang Putar Balik' },
-    { image: 'assets/images/quiz-no-overtaking.png', label: 'Dilarang Mendahului' },
-    { image: 'assets/images/quiz-slippery-road.jpg', label: 'Jalan Licin' },
-    { image: 'assets/images/quiz-uneven-road.jpg', label: 'Jalan Bergelombang' },
-    { image: 'assets/images/quiz-children-crossing.png', label: 'Banyak Anak-Anak' },
-    { image: 'assets/images/quiz-intersection.jpg', label: 'Persimpangan Jalan' },
-    { image: 'assets/images/quiz-stop.png', label: 'Rambu Berhenti (STOP)' },
-    { image: 'assets/images/quiz-roundabout-mandatory.png', label: 'Wajib Ikuti Bundaran' },
-    { image: 'assets/images/quiz-parking.png', label: 'Tempat Parkir' },
-    { image: 'assets/images/quiz-road-narrows.jpg', label: 'Jalan Menyempit' },
-    { image: 'assets/images/quiz-steep-ascent.jpg', label: 'Jalan Menanjak' },
-    { image: 'assets/images/quiz-steep-descent.jpg', label: 'Jalan Menurun' },
-    { image: 'assets/images/quiz-bridge.jpg', label: 'Jembatan' },
-    { image: 'assets/images/quiz-railway-gate.jpg', label: 'Perlintasan Kereta Api dengan Palang Pintu' },
-    { image: 'assets/images/quiz-railway-no-gate.png', label: 'Perlintasan Kereta Api tanpa Palang Pintu' },
-    { image: 'assets/images/quiz-no-horn.jpg', label: 'Dilarang Membunyikan Klakson' },
-    { image: 'assets/images/quiz-bicycle-lane.png', label: 'Jalur Khusus Sepeda' },
-    { image: 'assets/images/quiz-pedestrian-crossing.png', label: 'Tempat Penyeberangan Pejalan Kaki' },
-    { image: 'assets/images/quiz-winding-road.png', label: 'Jalan Berliku di Depan' },
+    { image: 'assets/images/quiz-no-entry.jpg' },
+    { image: 'assets/images/quiz-no-parking.jpg' },
+    { image: 'assets/images/quiz-no-stopping.jpg' },
+    { image: 'assets/images/quiz-speed-limit-40.jpg' },
+    { image: 'assets/images/quiz-no-left-turn.png' },
+    { image: 'assets/images/quiz-no-right-turn.png' },
+    { image: 'assets/images/quiz-no-u-turn.png' },
+    { image: 'assets/images/quiz-no-overtaking.png' },
+    { image: 'assets/images/quiz-slippery-road.jpg' },
+    { image: 'assets/images/quiz-uneven-road.jpg' },
+    { image: 'assets/images/quiz-children-crossing.png' },
+    { image: 'assets/images/quiz-intersection.jpg' },
+    { image: 'assets/images/quiz-stop.png' },
+    { image: 'assets/images/quiz-roundabout-mandatory.png' },
+    { image: 'assets/images/quiz-parking.png' },
+    { image: 'assets/images/quiz-road-narrows.jpg' },
+    { image: 'assets/images/quiz-steep-ascent.jpg' },
+    { image: 'assets/images/quiz-steep-descent.jpg' },
+    { image: 'assets/images/quiz-bridge.jpg' },
+    { image: 'assets/images/quiz-railway-gate.jpg' },
+    { image: 'assets/images/quiz-railway-no-gate.png' },
+    { image: 'assets/images/quiz-no-horn.jpg' },
+    { image: 'assets/images/quiz-bicycle-lane.png' },
+    { image: 'assets/images/quiz-pedestrian-crossing.png' },
+    { image: 'assets/images/quiz-winding-road.png' },
   ];
 
   function createSignGlyph(symbol, color) {
@@ -714,21 +714,14 @@
           if (sign.image) {
             const image = document.createElement('img');
             image.src = sign.image;
-            image.alt = sign.label;
+            image.alt = '';
             image.draggable = false;
             signImage.appendChild(image);
           } else {
             signImage.innerHTML = createTrafficSignSvg(sign);
           }
-          signImage.setAttribute('aria-label', sign.label);
-          signImage.setAttribute('title', sign.label);
-          const caption = document.createElement('span');
-          caption.className = 'quiz-sign-caption';
-          caption.textContent = sign.label;
-          signImage.appendChild(caption);
         } else {
           signImage.innerHTML = '';
-          signImage.removeAttribute('title');
         }
       }
     }
